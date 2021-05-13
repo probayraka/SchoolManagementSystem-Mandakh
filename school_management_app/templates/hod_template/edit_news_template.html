@@ -1,0 +1,141 @@
+{% extends 'hod_template/base_template.html' %} {% load static %} {% block page_title %}
+{% block custom_css %}
+<script src="{% static 'plugins/ckeditor/ckeditor.js' %}"></script>
+<style>
+  .zoomD {
+    opacity: 1;
+    width: 350px;
+    height: auto;
+    cursor: pointer;
+    transition: transform .2s;
+  }
+
+  .zoomD:hover {
+    opacity: 0.8;
+    transition: transform .2s;
+    transform: scale(1.1);
+  }
+
+  #lb-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease 0.4s;
+  }
+
+  #lb-back.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #lb-img {
+    position: relative;
+    top: 53%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  #lb-img img {
+    max-width: 100%;
+    max-height: 92vh;
+    height: auto;
+  }
+</style>
+{% endblock custom_css %}
+<i class="nav-icon fas fa-chalkboard-teacher"></i> Мэдээ засах
+<a href="/manage_student_news" class="btn btn-success"><i class="nav-icon fas fa-chevron-left"></i> Буцах</a>
+{% endblock page_title %} {% block main_content %}
+<!-- Main content -->
+<section class="content">
+  <div class="container">
+    <div id="lb-back">
+      <div id="lb-img"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Мэдээ засах</h3>
+          </div>
+          <form role="form" action="/edit_student_news_save" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+              <input type="hidden" class="form-control" name="news_id" value="{{ news.id }}">
+              <div class="form-group">
+                <label>Гарчиг</label>
+                <input type="text" class="form-control" name="ntitle" placeholder="Enter Title" required
+                  value="{{ news.ntitle }}" />
+              </div>
+              <div class="form-group">
+                <label>Мэдээ</label>
+                <textarea type="text" id="ntext" name="ntext" rows="5" class="form-control">{{ news.ntext }}</textarea>
+              </div>
+              <script>
+                CKEDITOR.replace('ntext');
+              </script>
+              <div class="form-group">
+                <label>Зураг</label>
+                <input type="file" class="form-control" placeholder="" name="pic" accept="image/*" />
+              </div>
+              <h5 style="font-weight: 700; bottom: 0.5rem; font-size: 1rem;">Одоо байгаа зураг:</h5>
+              <img class="zoomD" src="{{ news.pic }}" />
+              {% if messages %} {% for message in messages %} {% if message.tags == 'error' %}
+              <div class="alert alert-danger" style="margin-top: 10px">
+                {{ message }}
+              </div>
+              {% endif %} {% if message.tags == 'success' %}
+              <div class="alert alert-success" style="margin-top: 10px">
+                {{ message }}
+              </div>
+              {% endif %} {% endfor %} {% endif %}
+            </div>
+        </div>
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary btn-block">
+            засах
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% endblock main_content %}
+{% block custom_js %}
+<script src="{% static 'plugins/ckeditor/ckeditor.js' %}"></script>
+<script>
+  var zoomImg = function () {
+    var clone = this.cloneNode();
+    clone.classList.remove("zoomD");
+    var lb = document.getElementById("lb-img");
+    lb.innerHTML = "";
+    lb.appendChild(clone);
+
+    lb = document.getElementById("lb-back");
+    lb.classList.add("show");
+  };
+
+  window.addEventListener("load", function () {
+
+    var images = document.getElementsByClassName("zoomD");
+    if (images.length > 0) {
+      for (var img of images) {
+        img.addEventListener("click", zoomImg);
+      }
+    }
+
+    document.getElementById("lb-back").addEventListener("click", function () {
+      this.classList.remove("show");
+    })
+  });
+</script>
+{% endblock custom_js %}

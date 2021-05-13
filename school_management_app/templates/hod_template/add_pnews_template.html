@@ -1,0 +1,60 @@
+{% extends 'hod_template/base_template.html' %} {% load static %} {% block page_title %}
+<i class="nav-icon fas fa-chalkboard-teacher"></i> Эцэг эхийн мэдээлэл нэмэх
+<a href="/manage_parent_news" class="btn btn-success"><i class="nav-icon fas fa-chevron-left"></i> Буцах</a>
+{% endblock page_title %} {% block main_content %}
+{% block custom_css %}
+<script src="{% static 'plugins/ckeditor/ckeditor.js' %}"></script>
+{% endblock custom_css %}
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Эцэг эхийн мэдээлэл нэмэх</h3>
+          </div>
+          <form role="form" action="/add_parent_news_save" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+              <div class="form-group">
+                <label>Гарчиг</label>
+                <input type="text" class="form-control" name="ntitle" placeholder="Гарчиг" required />
+              </div>
+              <div class="form-group">
+                <label>Мэдээ</label>
+                <textarea type="text" id="ntext" name="ntext" rows="5" class="form-control"></textarea>
+              </div>
+              <script>
+                CKEDITOR.replace('ntext');
+              </script>
+              <div class="form-group">
+                <label>Зураг</label>
+                <input type="file" class="form-control" value="None" name="pic" accept="image/*" />
+              </div>
+              <div class="form-group">
+                {% if messages %} {% for message in messages %} {% if message.tags == 'error' %}
+                <div class="alert alert-danger" style="margin-top: 10px">
+                  {{ message }}
+                </div>
+                {% endif %} {% if message.tags == 'success' %}
+                <div class="alert alert-success" style="margin-top: 10px">
+                  {{ message }}
+                </div>
+                {% endif %} {% endfor %} {% endif %}
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary btn-block">
+                Add News
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main_content %}

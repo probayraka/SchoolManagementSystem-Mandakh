@@ -1,0 +1,484 @@
+{% load static %}
+{% block custom_css %}
+<style>
+  .zoomD {
+    cursor: zoom-in;
+  }
+
+  #lb-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease 0.4s;
+    cursor: zoom-out;
+  }
+
+  #lb-back.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #lb-img {
+    position: relative;
+    top: 53%;
+    left: 0%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  @media screen and (min-width: 992px) {
+    #lb-img {
+      left: 7%;
+    }
+  }
+
+  #lb-img img {
+    max-width: 100%;
+    max-height: 92vh;
+    height: auto;
+  }
+</style>
+{% endblock custom_css %}
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/admin_home" class="brand-link">
+      <img src="{% static "dist/img/home-icon.png" %}" alt="logo" class="brand-image img-circle elevation-3" style="opacity: .9">
+      <span class="brand-text font-weight-light">Сургуулийн нэр</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ admin.profile_pic }}" class="img-circle elevation-2 zoomD" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{% url 'admin_profile' %}" class="d-block">{{ user.username }}</a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Хайх" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            {% url 'admin_home' as admin_home %}
+            <a href="{{ admin_home }}" class="nav-link {% if request.path == admin_home %} active {% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Нүүр</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chalkboard-teacher"></i>
+              <p>Багш
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_staff' as add_staff %}
+                <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>Багш нэмэх</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                  {% url 'manage_staff' as manage_staff %}
+                {% url 'edit_staff' staff_id=id as edit_staff %}
+                <a href="{% url 'manage_staff' %}" class="nav-link {% if request.path == manage_staff %} active {% endif %} {% if request.path == edit_staff %} active {% endif %}">
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>Багш нарын жагсаалт</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Student -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                Сурагч
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_student' as add_student %}
+                <a href="{% url 'add_student' %}" class="nav-link {% if request.path == add_student %} active {% endif %}">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>
+                    Сурагч нэмэх
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'manage_student' as manage_student %}
+                {% url 'edit_student' student_id=id as edit_student %}
+                <a href="{% url 'manage_student' %}"
+                  class="nav-link {% if request.path == manage_student %} active {% endif %} {% if request.path == edit_student %} active {% endif %}">
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>
+                    Сурагч нарын жагсаалт
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Parents -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Эцэг эх
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_parent' as add_parent %}
+                <a href="{% url 'add_parent' %}" class="nav-link {% if request.path == add_parent %} active {% endif %}">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>
+                    Эцэг эх нэмэх
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'manage_parent' as manage_parent %}
+                {% url 'edit_parent' student_id=id as edit_parent %}
+                <a href="{% url 'manage_parent' %}"
+                  class="nav-link {% if request.path == manage_parent %} active {% endif %} {% if request.path == edit_parent %} active {% endif %}">
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>
+                    Эцэг эхийн жагсаалт
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Course -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Анги
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_course' as add_course %}
+                <a href="{% url 'add_course' %}" class="nav-link {% if request.path == add_course %} active {% endif %}">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>
+                    Анги нэмэх
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'manage_course' as manage_course %}
+                {% url 'edit_course' course_id=id as edit_course %}
+                <a href="{% url 'manage_course' %}"
+                  class="nav-link {% if request.path == manage_course %} active {% endif %} {% if request.path == edit_course %} active {% endif %}">
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>
+                    Ангийн жагсаалт
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Subject -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book-open"></i>
+              <p>
+                Хичээл
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_subject' as add_subject %}
+                <a href="{% url 'add_subject' %}" class="nav-link {% if request.path == add_subject %} active {% endif %}">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>
+                    Хичээл нэмэх
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'manage_subject' as manage_subject %}
+                {% url 'edit_subject' subject_id=id as edit_subject %}
+                <a href="{% url 'manage_subject' %}"
+                  class="nav-link {% if request.path == manage_subject %} active {% endif %} {% if request.path == edit_subject %} active {% endif %} ">
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>
+                    Хичээлийн жагсаалт
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Хичээлийн жил
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'add_session' as add_session %}
+                <a href="{% url 'add_session' %}" class="nav-link {% if request.path == add_session %} active {% endif %} ">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>
+                    Хичээлийн жил нэмэх
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'manage_session' as manage_session %}
+                <a href="{% url 'manage_session' %}" class="nav-link {% if request.path == manage_session %} active {% endif %} ">
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>
+                    Жагсаалт
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Feedback -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-comments"></i>
+              <p>
+                Санал хүсэлт
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'student_feedback_message' as student_feedback_message %}
+                <a href="{% url 'student_feedback_message' %}"
+                  class="nav-link {% if request.path == student_feedback_message %} active {% endif %}">
+                  <i class="nav-icon fas fa-user-graduate"></i>
+                  <p>
+                    Сурагч
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'staff_feedback_message' as staff_feedback_message %}
+                <a href="{% url 'staff_feedback_message' %}"
+                  class="nav-link {% if request.path == staff_feedback_message %} active {% endif %}">
+                  <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                  <p>
+                    Багш
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'parent_feedback_message' as parent_feedback_message %}
+                <a href="{% url 'parent_feedback_message' %}"
+                  class="nav-link {% if request.path == parent_feedback_message %} active {% endif %}">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>
+                    Эцэг эх
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Leave -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Чөлөө
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'student_leave_view' as student_leave_view %}
+                <a href="{% url 'student_leave_view' %}"
+                  class="nav-link {% if request.path == student_leave_view %} active {% endif %}">
+                  <i class="nav-icon fas fa-user-graduate"></i>
+                  <p>
+                    Сурагч
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'staff_leave_view' as staff_leave_view %}
+                <a href="{% url 'staff_leave_view' %}"
+                  class="nav-link {% if request.path == staff_leave_view %} active {% endif %}">
+                  <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                  <p>
+                    Багш
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            {% url 'admin_view_attendance' as admin_view_attendance %}
+            <a href="{% url 'admin_view_attendance' %}"
+              class="nav-link {% if request.path == admin_view_attendance %} active {% endif %}">
+              <i class="nav-icon fas fa-user-check"></i>
+              <p>
+                Ирц харах
+              </p>
+            </a>
+          </li>
+            
+          <!-- Notification -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-bell"></i>
+              <p>
+                Мэдэгдэл
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'admin_send_notification_staff' as admin_send_notification_staff %}
+                <a href="{% url 'admin_send_notification_staff' %}"
+                  class="nav-link {% if request.path == admin_send_notification_staff %} active {% endif %}">
+                  <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                  <p>
+                    Багш нар-луу мэдэгдэл явуулах
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'admin_send_notification_student' as admin_send_notification_student %}
+                <a href="{% url 'admin_send_notification_student' %}"
+                  class="nav-link {% if request.path == admin_send_notification_student %} active {% endif %}">
+                  <i class="nav-icon fas fa-user-graduate"></i>
+                  <p>
+                    Сурагчид-руу мэдэгдэл явуулах
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'admin_send_notification_parent' as admin_send_notification_parent %}
+                <a href="{% url 'admin_send_notification_parent' %}"
+                  class="nav-link {% if request.path == admin_send_notification_parent %} active {% endif %}">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>
+                    Эцэг эх-рүү мэдэгдэл явуулах
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- News -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-newspaper"></i>
+              <p>
+                Зар мэдээлэл
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'manage_tnews' as manage_tnews %}
+                <a href="{% url 'manage_tnews' %}" class="nav-link {% if request.path == manage_tnews %} active {% endif %}">
+                  <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                  <p>
+                    Багшийн мэдээлэл
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'manage_news' as manage_news %}
+                {% url 'edit_news' news_id=id as edit_news %}
+                <a href="{% url 'manage_news' %}"
+                  class="nav-link {% if request.path == manage_news %} active {% endif %} {% if request.path == edit_news %} active {% endif %}">
+                  <i class="nav-icon fas fa-user-graduate"></i>
+                  <p>
+                    Сурагчийн мэдээлэл
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'manage_pnews' as manage_pnews %}
+                {% url 'edit_pnews' news_id=id as edit_pnews %}
+                {% url 'add_pnews' as add_pnews %}
+                <a href="{% url 'manage_pnews' %}"
+                  class="nav-link {% if request.path == manage_pnews %} active {% endif %} {% if request.path == edit_pnews %} active {% endif %} {% if request.path == add_pnews %} active {% endif %}">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>
+                    Эцэг эхийн мэдээлэл
+                  </p>
+                </a>
+              </li>
+            </ul>
+            <li class="nav-item">
+              {% url 'covid19' as covid19 %}
+              <a href="{% url 'covid19' %}"
+                class="nav-link {% if request.path == covid19 %} active {% endif %}">
+                <i class="nav-icon fas fa-virus"></i>
+                <p>
+                  COVID-19
+                </p>
+              </a>
+            </li>
+          </li>
+        </ul>
+        <!-- <button onclick="setLanguage('en')" class="btn mr-4 en-button"></button>
+        <button onclick="setLanguage('es')" class="btn mr-4 mn-button"></button> -->
+      </nav>
+    </div>
+  </aside>
+  <script>
+    var zoomImg = function () {
+      var clone = this.cloneNode();
+      clone.classList.remove("zoomD");
+      var lb = document.getElementById("lb-img");
+      lb.innerHTML = "";
+      lb.appendChild(clone);
+
+      lb = document.getElementById("lb-back");
+      lb.classList.add("show");
+    };
+
+    window.addEventListener("load", function () {
+
+      var images = document.getElementsByClassName("zoomD");
+      if (images.length > 0) {
+        for (var img of images) {
+          img.addEventListener("click", zoomImg);
+        }
+      }
+
+      document.getElementById("lb-back").addEventListener("click", function () {
+        this.classList.remove("show");
+      })
+    });
+  </script>

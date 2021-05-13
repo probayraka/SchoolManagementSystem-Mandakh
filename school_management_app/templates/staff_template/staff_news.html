@@ -1,0 +1,64 @@
+{% extends 'staff_template/base_template.html' %}
+{% block page_title %}
+<i class="nav-icon fas fa-newspaper"></i> Зар, мэдээлэл
+{% endblock page_title %}
+{% block main_content %}
+<style>
+  .news-c1{
+    padding: 1.2rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: .2rem;
+    position: relative;
+    /* border: solid #474747; */
+  }
+</style>
+
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Зар, мэдээлэл</h3>
+          </div>
+          <div class="news-c1">
+            <div class="row row-cols-1 row-cols-md-3">
+              {% for a in news %}
+              <div class="col mb-4">
+                <div class="card" style="border-radius: 15px 15px 0px 0px;">
+                  <a href="/view_staff_news/{{ a.id }}"><img src="{{ a.pic }}" class="card-img-top" style="border-radius: 8px 8px 0px 0px;"></a>
+                  <div class="card-body">
+                    <a href="/view_staff_news/{{ a.id }}" style="color: rgb(36, 36, 36);">
+                      <h5 class="card-title">{{ a.ntitle }}</h5>
+                    </a>
+                    <!-- <p class="card-text"></p> -->
+                    <p class="card-text">
+                      <small class="text-muted">
+                        <i class="fas fa-clock"></i>&nbsp;{{ a.ndate }}
+                      </small>
+                      &nbsp;
+                    </p>
+                    <a href="/view_staff_news/{{ a.id }}" class="btn btn-primary">Цааш унших...</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="form-group">
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+            {% endif %}
+            {% if message.tags == 'success' %}
+            <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+</section>
+{% endblock main_content %}

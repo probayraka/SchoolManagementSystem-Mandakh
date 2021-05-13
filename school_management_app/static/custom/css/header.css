@@ -1,0 +1,17 @@
+.navbar-custom {
+  width: 100%;
+  /* min-height: 1vh; */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 80px;
+  background: #d43f8d;
+  position: relative;
+  z-index: 1;
+  color: rgb(239, 239, 240);
+}

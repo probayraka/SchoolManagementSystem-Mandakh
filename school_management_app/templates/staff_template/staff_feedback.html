@@ -1,0 +1,67 @@
+{% extends 'staff_template/base_template.html' %}
+{% block page_title %}
+<i class="nav-icon fas fa-comments"></i> Санал хүсэлт
+{% endblock page_title %}
+{% block main_content %}
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Санал хүсэлт үлдээх</h3>
+          </div>
+          <form action="{% url 'staff_feedback_save' %}" method="post">
+            <div class="card-body">
+              {% csrf_token %}
+              <div class="form-group">
+                <label>Санал хүсэлт</label>
+                <textarea class="form-control" rows="6" name="feedback_msg" placeholder="Санал хүсэлтээ энд бичнэ үү."></textarea>
+              </div>
+              <div class="form-group">
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == 'error' %}
+                <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                {% endif %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary btn-block" id="fetch_student">Илгээх</button>
+            </div>
+          </form>
+        </div>
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Санал хүсэлтийн түүх</h3>
+          </div>
+          <div class="table">
+            <table class="table">
+              <tr>
+                <th>ID</th>
+                <th>Санал хүсэлт</th>
+                <th>Хариу</th>
+              </tr>
+              {% for row in feedback_data %}
+              <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.feedback }}</td>
+                <td>{{ row.feedback_reply }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main_content %}

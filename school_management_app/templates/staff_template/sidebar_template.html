@@ -1,0 +1,247 @@
+{% load static %}
+{% block custom_css %}
+<style>
+  .zoomD {
+    cursor: zoom-in;
+  }
+
+  #lb-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease 0.4s;
+    cursor: zoom-out;
+  }
+
+  #lb-back.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #lb-img {
+    position: relative;
+    top: 53%;
+    left: 0%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  @media screen and (min-width: 992px) {
+    #lb-img {
+      left: 7%;
+    }
+  }
+
+  #lb-img img {
+    max-width: 100%;
+    max-height: 92vh;
+    height: auto;
+  }
+  .first_letter{
+    display:block;
+    visibility:hidden;
+  }
+  .first_letter:first-letter{
+    visibility:visible;
+  }
+</style>
+{% endblock custom_css %}
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/staff_home" class="brand-link">
+      <img src="{% static "dist/img/home-icon.png" %}" alt="logo" class="brand-image img-circle elevation-3" style="opacity: 1">
+      <span class="brand-text font-weight-light">Сургуулийн нэр</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ staff_pro.profile_pic }}" class="img-circle elevation-2 zoomD" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{% url 'staff_profile' %}" class="d-block">
+            {{ user.last_name }}
+          </a>
+        </div>
+      </div>
+
+       <!-- SidebarSearch Form -->
+       <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            {% url 'staff_home' as staff_home %}
+            <a href="{{ staff_home }}" class="nav-link {% if request.path == staff_home %} active {% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Нүүр
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'staff_news' as staff_news %}
+            <a href="{{ staff_news }}" class="nav-link {% if request.path == staff_news %} active {% endif %}">
+              <i class="nav-icon fas fa-newspaper"></i>
+              <p>
+                Зар, мэдээлэл
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chalkboard-teacher"></i>
+              <p>
+                Ирц
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'staff_take_attendance' as staff_take_attendance %}
+                <a href="{{ staff_take_attendance }}"
+                  class="nav-link {% if request.path == staff_take_attendance %} active {% endif %}">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>
+                    Ирц Авах
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'staff_update_attendance' as staff_update_attendance %}
+                <a href="{{ staff_update_attendance }}"
+                  class="nav-link {% if request.path == staff_update_attendance %} active {% endif %}">
+                  <i class="nav-icon fas fa-edit"></i>
+                  <p>
+                    Ирц харах, шинэчлэх
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            {% url 'staff_apply_leave' as staff_apply_leave %}
+            <a href="{{ staff_apply_leave }}" class="nav-link {% if request.path == staff_apply_leave %} active {% endif %}">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Чөлөө авах
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'staff_feedback' as staff_feedback %}
+            <a href="{{ staff_feedback }}" class="nav-link {% if request.path == staff_feedback %} active {% endif %}">
+              <i class="nav-icon fas fa-comments"></i>
+              <p>
+                Санал хүсэлт
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-graduation-cap"></i>
+              <p>
+                Дүн
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                {% url 'staff_add_result' as staff_add_result %}
+                <a href="{{ staff_add_result }}" class="nav-link {% if request.path == staff_add_result %} active {% endif %}">
+                  <i class="nav-icon fas fa-plus"></i>
+                  <p>
+                    Дүн бүртгэх
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'edit_student_result' as edit_student_result %}
+                <a href="{{ edit_student_result }}"
+                  class="nav-link {% if request.path == edit_student_result %} active {% endif %}">
+                  <i class="nav-icon fas fa-edit"></i>
+                  <p>
+                    Дүн засах
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
+            {% url 'start_live_classroom' as start_live_classroom %}
+            <a href="{{ start_live_classroom }}" class="nav-link {% if request.path == start_live_classroom %} active {% endif %}">
+              <i class="nav-icon fas fa-circle"></i>
+              <p>
+                Онлайн хичээл эхлүүлэх
+              </p>
+            </a>
+          </li> -->
+
+           <li class="nav-item">
+            {% url 'staff_all_notification' as staff_all_notification %}
+            <a href="{{ staff_all_notification }}" class="nav-link {% if request.path == staff_all_notification %} active {% endif %}">
+              <i class="nav-icon fas fa-bell"></i>
+              <p>
+                Мэдэгдлүүд
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'tcovid19' as tcovid19 %}
+            <a href="{% url 'tcovid19' %}"
+              class="nav-link {% if request.path == tcovid19 %} active {% endif %}">
+              <i class="nav-icon fas fa-virus"></i>
+              <p>
+                COVID-19
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <script>
+    var zoomImg = function () {
+      var clone = this.cloneNode();
+      clone.classList.remove("zoomD");
+      var lb = document.getElementById("lb-img");
+      lb.innerHTML = "";
+      lb.appendChild(clone);
+
+      lb = document.getElementById("lb-back");
+      lb.classList.add("show");
+    };
+
+    window.addEventListener("load", function () {
+
+      var images = document.getElementsByClassName("zoomD");
+      if (images.length > 0) {
+        for (var img of images) {
+          img.addEventListener("click", zoomImg);
+        }
+      }
+
+      document.getElementById("lb-back").addEventListener("click", function () {
+        this.classList.remove("show");
+      })
+    });
+  </script>

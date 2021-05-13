@@ -1,0 +1,369 @@
+{% extends 'staff_template/base_template.html' %}
+{% load static %}
+{% load humanize %}
+{% block page_title %}
+{% block custom_css %}
+<style>
+  .zoomD {
+    max-width: 100%;
+    height: auto;
+    cursor: zoom-in;
+  }
+
+  @media screen and (min-width: 992px) {
+    .zoomD {
+      max-width: 680px;
+      height: auto;
+    }
+  }
+
+  #lb-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease 0.4s;
+    cursor: zoom-out;
+  }
+
+  #lb-back.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #lb-img {
+    position: relative;
+    top: 53%;
+    left: 0%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  @media screen and (min-width: 992px) {
+    #lb-img {
+      left: 7%;
+    }
+  }
+
+  #lb-img img {
+    max-width: 100%;
+    max-height: 92vh;
+    height: auto;
+  }
+
+  .text-c1 {
+    width: auto;
+    height: auto;
+  }
+
+  @media screen and (min-width: 992px) {
+    .text-c1 {
+      width: 600px;
+      height: auto;
+    }
+  }
+</style>
+{% endblock custom_css %}
+<i class="nav-icon fas fa-newspaper"></i> Мэдээллийн дэлгэрэнгүй <a href="/staff_news" class="btn btn-success"><i
+    class="nav-icon fas fa-chevron-left"></i> Буцах</a>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container">
+    {% if messages %}
+    <div class="form-group">
+      {% for message in messages %}
+      {% if message.tags == 'error' %}
+      <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+      {% endif %}
+      {% if message.tags == 'success' %}
+      <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div id="lb-back">
+      <div id="lb-img"></div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Мэдээллийн дэлгэрэнгүй</h3>
+          </div>
+
+          <div class="card-body">
+            <h4>{{ news.ntitle }}</h4>
+            <p class="text-muted"><i class="fas fa-clock"></i> {{ news.ndate }}</p>
+            <hr style="border-top: 1px solid rgb(151, 151, 151);">
+            <p align="justify" class="f1-s-11 cl6 p-b-25">
+              {{ news.ntext|safe }}
+            </p>
+            {% if news.pic %}
+            <img class="zoomD" src="{{ news.pic }}" alt="IMG">
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Comment -->
+        <div class="card card-primary" style="margin-top: 40px;">
+          {% if comment %}
+          <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-comment"></i> Сэтгэгдэл</h3>
+          </div>
+
+          <div class="card-body">
+            <h3>Сэтгэгдэл үлдээх</h3>
+            <form method="POST" action="/view_staff_news_comment_save" style="margin-top: 1.3em;">
+              {% csrf_token %}
+              <input type="hidden" name="TNews_id" value="{{ news.id }}">
+              <div class="form-group">
+                <label>Сэтгэгдэл</label>
+                <textarea class="form-control text-c1" name="body" cols="31" rows="4" placeholder="Сэтгэгдлээ энд бичнэ үү."></textarea>
+                <button type="submit" class="btn btn-primary mt-4">Илгээх</button>
+              </div>
+            </form>
+            <hr style="border-top: 1px solid rgb(151, 151, 151);">
+          </div>
+
+          <div class="card-body">
+            {% if comment_count == 1 %}
+            <h2>{{ comment_count }} Сэтгэгдэл</h2>
+            {% else %}
+            <h2>{{ comment_count }} Сэтгэгдлүүд</h2>
+            {% endif %}
+
+            {% for a in comment %}
+            <div class="comments" style="padding: 10px;">
+              <hr style="border-top: 1px solid rgb(151, 151, 151);">
+              <p class="font-weight-bold">
+                <img src="{% static "dist/img/avatar3.png" %}" class="img-circle elevation-2 mr-2" style="width: 40px;"
+                  alt="User Image">
+                {{ a.staff_id.first_name }} {{ a.staff_id.last_name }}&ensp;
+                <span class=" text-muted font-weight-normal">
+                  <i class="fas fa-clock"></i>&nbsp;{{ a.created_on | naturaltime }}
+                </span>
+                &nbsp;
+                <span data-toggle="collapse" data-target="#id{{ a.id }}" aria-expanded="false" aria-controls="id{{ a.id }}">
+                <a data-toggle="tooltip" data-placement="top" title="Хариулах" style="cursor:pointer; color: rgb(0, 102, 255);"><i class="fas fa-reply"></i></a></span>
+                {% if a.staff_id == staff %}
+                &nbsp;
+                <span data-toggle="collapse" data-target="#edit{{ a.id }}" aria-expanded="false"aria-controls="edit{{ a.id }}">
+                <a data-toggle="tooltip" data-placement="top" title="Засах" style="color: rgb(0, 102, 255); cursor: pointer;"><i class="fas fa-edit"></i></a></span>
+                &nbsp;
+                <span href="/delete_tcomment/{{ news.id }}/{{ a.id }}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#deleteComment" id="deleteButton{{a.id}}">
+                <a data-toggle="tooltip" data-placement="top" title="Устгах" style="color: rgb(247, 39, 39); cursor: pointer;"><i class="fas fa-trash"></i></a>
+                </span>
+                {% else %}
+                {% endif %}
+                <!-- Comment Modal -->
+                <div class="modal fade" id="deleteComment" tabindex="-1" caller-id="" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteCommentLabel"><i class="fas fa-trash"></i> Сэтгэгдэл устгах</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body confirm-delete">
+                        Та энэ сэтгэгдлийг устгахдаа итгэлтэй байна уу?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal1">Устгах</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </p>
+              {{ a.body }}
+              <!-- Edit Comment Form -->
+              <div class="collapse" id="edit{{ a.id }}">
+                <form method="POST" style="margin-top: 1.3em; margin-left: 30px;" action="/view_staff_news_comment_edit_save">
+                  {% csrf_token %}
+                  <input type="hidden" name="comment_id" value="{{ a.id }}">
+                  <input type="hidden" name="TNews_id" value="{{ news.id }}">
+                  <div class="form-group">
+                    <label>Засах</label>
+                    <textarea class="form-control text-c1" name="body" cols="31" rows="1">{{ a.body }}</textarea>
+                    <button type="submit" class="btn btn-primary mt-4">Засах</button>
+                  </div>
+                </form>
+              </div>
+              <!-- Reply Form -->
+              <div class="collapse" id="id{{ a.id }}">
+                <form method="POST" style="margin-top: 1.3em; margin-left: 30px;"
+                  action="/view_staff_news_comment_save">
+                  {% csrf_token %}
+                  <input type="hidden" name="comment_id" value="{{ a.id }}">
+                  <input type="hidden" name="TNews_id" value="{{ news.id }}">
+                  <div class="form-group">
+                    <label>Хариулах</label>
+                    <textarea class="form-control text-c1" name="body" cols="31" rows="1" placeholder="Хариу"></textarea>
+                    <button type="submit" class="btn btn-primary mt-4">Хариулах</button>
+                  </div>
+                </form>
+              </div>
+              {% if a.replies.count == 1 %}
+              <h4 class="mt-4">{{ a.replies.count }} Хариулт</h4>
+              {% elif a.replies.count >= 2 %}
+              <h4 class="mt-4">{{ a.replies.count }} Хариултууд</h4>
+              {% else %}
+              {% endif %}
+              <div style="border-left: 4px solid #7D7D7D; border-right: 4px solid #7D7D7D; border-radius: 7px;">
+                {% for b in a.replies.all %}
+                <div class="comments" style="padding: 10px; margin-left: 30px;">
+                  <hr style="border-top: 1px solid rgb(151, 151, 151);">
+                  <p class="font-weight-bold">
+                    <img src="{% static "dist/img/avatar3.png" %}" class="img-circle elevation-2 mr-2"
+                      style="width: 40px;" alt="User Image">
+                    {{ b.staff_id.first_name }} {{ b.staff_id.last_name }}&ensp;
+                    <span class=" text-muted font-weight-normal">
+                      <i class="fas fa-clock"></i>&nbsp;{{ b.created_on | naturaltime }}
+                    </span>
+                    {% if b.staff_id == staff %}
+                    &nbsp;
+                    <span data-toggle="collapse" data-target="#edit{{ b.id }}" aria-expanded="false"aria-controls="edit{{ b.id }}">
+                    <a data-toggle="tooltip" data-placement="top"
+                      title="Засах" style="color: rgb(0, 102, 255); cursor: pointer;"><i class="fas fa-edit"></i></a></span>
+                    &nbsp;
+                    <span href="/delete_tcomment/{{ news.id }}/{{ b.id }}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#deleteReply" id="deleteButton{{b.id}}">
+                    <a data-toggle="tooltip" data-placement="top" title="Устгах" style="cursor: pointer; color: rgb(247, 39, 39);"><i class="fas fa-trash"></i></a>
+                    </span>
+                    {% else %}
+                    {% endif %}
+                    <!-- Reply Delete Modal -->
+                    <div class="modal fade" id="deleteReply" tabindex="-1" caller-id="" role="dialog" aria-labelledby="deleteReplyLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="deleteReplyLabel">Хариулт устгах</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body confirm-delete">
+                            Та энэ хариултыг устгахдаа итгэлтэй байна уу?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Устгах</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </p>
+                  {{ b.body }}
+                  <!-- Edit Comment Form -->
+                  <div class="collapse" id="edit{{ b.id }}">
+                    <form method="POST" style="margin-top: 1.3em; margin-left: 30px;" action="/view_staff_news_comment_edit_save">
+                      {% csrf_token %}
+                      <input type="hidden" name="comment_id" value="{{ b.id }}">
+                      <input type="hidden" name="TNews_id" value="{{ news.id }}">
+                      <div class="form-group">
+                        <label>Хариулт засах</label>
+                        <textarea class="form-control text-c1" name="body" cols="31" rows="1">{{ b.body }}</textarea>
+                        <button type="submit" class="btn btn-primary mt-4">Засах</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          {% else %}
+          <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-comment"></i> Сэтгэгдэл</h3>
+          </div>
+          <div class="card-body">
+            <h2>Сэтгэгдэл байхгүй байна</h2>
+          </div>
+          <hr style="border-top: 1px solid rgb(151, 151, 151);">
+          <div class="card-body">
+            <h3>Сэтгэгдэл үлдээх</h3>
+            <form method="POST" action="/view_staff_news_comment_save" style="margin-top: 1.3em;">
+              {% csrf_token %}
+              <input type="hidden" name="TNews_id" value="{{ news.id }}">
+              <div class="form-group">
+                <label>Сэтгэгдэл</label>
+                <textarea class="form-control text-c1" name="body" cols="31" rows="4" placeholder="Сэтгэгдлээ энд бичнэ үү."></textarea>
+                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+              </div>
+            </form>
+            
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% block custom_js %}
+<script>
+  var zoomImg = function () {
+    var clone = this.cloneNode();
+    clone.classList.remove("zoomD");
+    var lb = document.getElementById("lb-img");
+    lb.innerHTML = "";
+    lb.appendChild(clone);
+
+    lb = document.getElementById("lb-back");
+    lb.classList.add("show");
+  };
+
+  window.addEventListener("load", function () {
+
+    var images = document.getElementsByClassName("zoomD");
+    if (images.length > 0) {
+      for (var img of images) {
+        img.addEventListener("click", zoomImg);
+      }
+    }
+
+    document.getElementById("lb-back").addEventListener("click", function () {
+      this.classList.remove("show");
+    })
+  });
+</script>
+
+<script>
+  $("#myinput1").on('input', function () {
+    if ($(this).val().length >= 80) {
+      alert('You have reached a limit of 80 characters');
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).on('click', '.confirm-delete', function () {
+    $("#deleteComment").attr("caller-id", $(this).attr("id"));
+  });
+
+  $(document).on('click', '#confirmDeleteButtonModal1', function () {
+    var caller = $("#confirmDeleteButtonModal1").closest(".modal").attr("caller-id");
+    window.location = $("#".concat(caller)).attr("href");
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).on('click', '.confirm-delete', function () {
+    $("#deleteReply").attr("caller-id", $(this).attr("id"));
+  });
+
+  $(document).on('click', '#confirmDeleteButtonModal', function () {
+    var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+    window.location = $("#".concat(caller)).attr("href");
+  });
+</script>
+{% endblock custom_js %}
+{% endblock main_content %}

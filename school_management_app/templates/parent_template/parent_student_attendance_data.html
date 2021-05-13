@@ -1,0 +1,75 @@
+{% extends 'parent_template/base_template.html' %}
+{% block custom_css %}
+<style>
+  .col-lg-3.attendance_div_red {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #f44336;
+    border: 5px solid rgb(250, 147, 147);
+    text-align: center;
+    color: #fff;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px grey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .col-lg-3.attendance_div_green {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #388e3c;
+    border: 5px solid rgb(175, 255, 151);
+    text-align: center;
+    color: #fff;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px grey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+</style>
+{% endblock custom_css %}
+{% block page_title %}
+Ирцийн мэдээлэл
+<a href="/parent_view_attendance" class="btn btn-success"><i class="nav-icon fas fa-chevron-left"></i> Буцах</a>
+{% endblock page_title %}
+{% block main_content %}
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Ирцийн мэдээлэл</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              {% if attendance_reports %}
+              {% for attendance_report in attendance_reports %}
+              {% if attendance_report.status == True %}
+              <div class="col-lg-3 attendance_div_green">
+                <b>Өдөр: {{ attendance_report.attendance_id.attendance_date }}</b>
+                <br>
+                <b>[ Ирсэн ]</b>
+              </div>
+              {% else %}
+              <div class="col-lg-3 attendance_div_red">
+                <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b>
+                <br>
+                <b>[ Ирээгүй ]</b>
+              </div>
+              {% endif %}
+              {% endfor %}
+              {% else %}
+              <div class="alert alert-danger text-center">Ирцийн мэдээлэл олдсонгүй!</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock main_content %}

@@ -1,0 +1,72 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+<i class="nav-icon fas fa-chalkboard-teacher"></i> Багш засах | Хэрэглэгчийн нэр : {{ staff.admin.username }} | #ID : {{ staff.admin.id }}
+<a href="/manage_staff" class="btn btn-success">Буцах</a>
+{% endblock page_title %}
+{% block main_content %}
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Багш засах</h3>
+          </div>
+          <form role="form" action="/edit_staff_save" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+              <div class="form-group">
+                <label>И-Мэйл</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter email"
+                  value="{{ staff.admin.email }}">
+              </div>
+              <div class="form-group">
+                <label>Овог</label>
+                <input type="text" class="form-control" placeholder="First Name" name="first_name"
+                  value="{{ staff.admin.first_name }}">
+              </div>
+              <div class="form-group">
+                <label>Нэр</label>
+                <input type="text" class="form-control" placeholder="Last Name" name="last_name"
+                  value="{{ staff.admin.last_name }}">
+                <input type="hidden" name="staff_id" value="{{ staff.admin.id }}">
+              </div>
+              <div class="form-group">
+                <label>Хэрэглэгчийн нэр</label>
+                <input type="text" class="form-control" placeholder="Username" name="username"
+                  value="{{ staff.admin.username }}">
+              </div>
+              <div class="form-group">
+                <label>Хаяг</label>
+                <input type="text" class="form-control" placeholder="Address" name="address"
+                  value="{{ staff.address }}">
+              </div>
+              <div class="form-group">
+                <label>Зураг солих</label>
+                <input type="file" class="form-control" name="profile_pic" accept=".png,.jpg,.jpeg,">
+              </div>
+              <div class="form-group">
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == 'error' %}
+                <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                {% endif %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary btn-block">Хадгалах</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main_content %}

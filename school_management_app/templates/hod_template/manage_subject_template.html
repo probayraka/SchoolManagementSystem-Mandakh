@@ -1,0 +1,126 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+{% block page_title %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-responsive/css/responsive.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-buttons/css/buttons.bootstrap4.min.css" %}">
+{% endblock custom_css %}
+<i class="nav-icon fas fa-book-open"></i> Хичээлийн жагсаалт <a href="/add_subject" class="btn btn-success">Хичээл нэмэх</a>
+{% endblock page_title %}
+{% block main_content %}
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="modal fade" id="deleteReply" tabindex="-1" caller-id="" role="dialog" aria-labelledby="deleteReplyLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteReplyLabel">Хичээл устгах</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body confirm-delete">
+          Та энэ хичээлийг устгахдаа итгэлтэй байна уу?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"
+            id="confirmDeleteButtonModal">Устгах</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Хичээлийн жагсаалт</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              {% if messages %}
+              {% for message in messages %}
+              {% if message.tags == 'error' %}
+              <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+              {% endif %}
+              {% if message.tags == 'success' %}
+              <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+              {% endif %}
+              {% endfor %}
+              {% endif %}
+            </div>
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Хичээлийн нэр</th>
+                  <th>Анги</th>
+                  <th>Багш</th>
+                  <th>Үйлдэл</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for subject in subjects %}
+                <tr>
+                  <td>{{ subject.id }}</td>
+                  <td>{{ subject.subject_name }}</td>
+                  <td>{{ subject.course_id.course_name }}</td>
+                  <td>{{ subject.staff_id.first_name }} {{ subject.staff_id.last_name }}</td>
+                  <td style="width: 150px;"><a href="/edit_subject/{{ subject.id }}" class="btn btn-success">Засах</a>
+                  <a href="/delete_subject/{{ subject.id }}" title="Delete" data-toggle="modal" data-target="#deleteReply" id="deleteButton{{subject.id}}" class="btn btn-danger ml-1 confirm-delete">Устгах</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% block custom_js %}
+    <!-- DataTables  & Plugins -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-responsive/js/responsive.bootstrap4.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-buttons/js/dataTables.buttons.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-buttons/js/buttons.bootstrap4.min.js" %}"></script>
+    <script src="{% static "plugins/jszip/jszip.min.js" %}"></script>
+    <script src="{% static "plugins/pdfmake/pdfmake.min.js" %}"></script>
+    <script src="{% static "plugins/pdfmake/vfs_fonts.js" %}"></script>
+    <script src="{% static "plugins/datatables-buttons/js/buttons.html5.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-buttons/js/buttons.print.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-buttons/js/buttons.colVis.min.js" %}"></script>
+    <script>
+      $(function () {
+        $("#example1").DataTable({
+          "responsive": true, "lengthChange": false, "autoWidth": false,
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+        });
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).on('click', '.confirm-delete', function () {
+        $("#deleteReply").attr("caller-id", $(this).attr("id"));
+      });
+    
+      $(document).on('click', '#confirmDeleteButtonModal', function () {
+        var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+        window.location = $("#".concat(caller)).attr("href");
+      });
+    </script>
+{% endblock custom_js %}
+{% endblock main_content %}

@@ -1,0 +1,184 @@
+{% load static %}
+<style>
+  .zoomD {
+    cursor: zoom-in;
+  }
+
+  #lb-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease 0.4s;
+    cursor: zoom-out;
+  }
+
+  #lb-back.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #lb-img {
+    position: relative;
+    top: 53%;
+    left: 0%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  @media screen and (min-width: 992px) {
+    #lb-img {
+      left: 7%;
+    }
+  }
+
+  #lb-img img {
+    max-width: 100%;
+    max-height: 92vh;
+    height: auto;
+  }
+</style>
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+      <img src="{% static "dist/img/home-icon.png" %}" alt="logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Сургуулийн нэр</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ student.profile_pic }}" class="img-circle elevation-2 zoomD" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{% url 'student_profile' %}" class="d-block">{{ user.last_name }}</a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Хайх" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            {% url 'student_home' as student_home %}
+            <a href="{{ student_home }}" class="nav-link {% if request.path == student_home %} active {% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Нүүр
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'student_news' as student_news %}
+            <a href="{{ student_news }}" class="nav-link {% if request.path == student_news %} active {% endif %}">
+              <i class="nav-icon fas fa-newspaper"></i>
+              <p>
+                Зар, мэдээлэл
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'student_view_attendance' as student_view_attendance %}
+            {% url 'student_view_attendance_post' as student_view_attendance_post %}
+            <a href="{{ student_view_attendance }}" class="nav-link {% if request.path == student_view_attendance %} active {% endif %} {% if request.path == student_view_attendance_post %} active {% endif %}">
+              <i class="nav-icon fas fa-user-check"></i>
+              <p>
+                Ирц харах
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            {% url 'student_apply_leave' as student_apply_leave %}
+            <a href="{{ student_apply_leave }}" class="nav-link {% if request.path == student_apply_leave %} active {% endif %}">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Чөлөө авах
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            {% url 'student_feedback' as student_feedback %}
+            <a href="{{ student_feedback }}" class="nav-link {% if request.path == student_feedback %} active {% endif %}">
+              <i class="nav-icon fas fa-comments"></i>
+              <p>
+                Санал хүсэлт
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'student_view_result' as student_view_result %}
+            <a href="{{ student_view_result }}" class="nav-link {% if request.path == student_view_result %} active {% endif %}">
+              <i class="nav-icon fas fa-graduation-cap"></i>
+              <p>
+                Дүн харах
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'student_all_notification' as student_all_notification %}
+            <a href="{{ student_all_notification }}" class="nav-link {% if request.path == student_all_notification %} active {% endif %}">
+              <i class="nav-icon fas fa-bell"></i>
+              <p>
+                Мэдэгдлүүд
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'scovid19' as scovid19 %}
+            <a href="{% url 'scovid19' %}"
+              class="nav-link {% if request.path == scovid19 %} active {% endif %}">
+              <i class="nav-icon fas fa-virus"></i>
+              <p>
+                COVID-19
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+  <script>
+    var zoomImg = function () {
+      var clone = this.cloneNode();
+      clone.classList.remove("zoomD");
+      var lb = document.getElementById("lb-img");
+      lb.innerHTML = "";
+      lb.appendChild(clone);
+
+      lb = document.getElementById("lb-back");
+      lb.classList.add("show");
+    };
+
+    window.addEventListener("load", function () {
+
+      var images = document.getElementsByClassName("zoomD");
+      if (images.length > 0) {
+        for (var img of images) {
+          img.addEventListener("click", zoomImg);
+        }
+      }
+
+      document.getElementById("lb-back").addEventListener("click", function () {
+        this.classList.remove("show");
+      })
+    });
+  </script>

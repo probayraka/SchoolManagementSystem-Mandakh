@@ -1,0 +1,251 @@
+{% extends 'parent_template/base_template.html' %}
+{% load static %}
+{% block page_title %}
+<i class="nav-icon fas fa-viruses"></i> COVID-19 Статистик 
+{% endblock page_title %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-responsive/css/responsive.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-buttons/css/buttons.bootstrap4.min.css" %}">
+</style>
+<style>
+  table.sortable thead {
+    background-color: rgba(238, 238, 238, 0);
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: sticky;
+    top: 0;
+  }
+</style>
+{% endblock custom_css %}
+{% block main_content %}
+<div class="spinner-wrapper">
+  <div class="spinner"></div>
+</div>
+<section class="content">
+  <div class="container-fluid">
+    <div id="lb-back">
+      <div id="lb-img"></div>
+    </div>
+    <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"> <img style="width: 40px; border-radius: 5px; margin-right: 6px; margin-bottom: 2px;" src="https://disease.sh/assets/img/flags/mn.png" /> Монгол</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h4 style="margin-bottom: 0%; color: rgb(56, 56, 56);" id="todayCases"><span class='numscroller' data-min='1'
+                    data-max='1000' data-delay='5' data-increment='10' id="active"></span></h4>
+
+                <h3 style="color: rgb(56, 56, 56);" id="cases"><span class='numscroller' data-min='1' data-max='1000'
+                    data-delay='5' data-increment='10' id="active"></span></h3>
+
+
+                <p style="color: rgb(56, 56, 56);">Батлагдсан</p>
+              </div>
+              <div class="icon">
+                <i class="nav-icon fas fa-check"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h4 style="margin-bottom: 0%;">&nbsp;</h4>
+                <h3 id="active"><span class='numscroller' data-min='1' data-max='1000' data-delay='5'
+                    data-increment='10' id="active"></span></h3>
+
+                <p>Эмчлэгдэж буй</p>
+              </div>
+              <div class="icon">
+                <i class="nav-icon fas fa-hospital-user"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h4 style="margin-bottom: 0%; color: white;" id="todayRecovered"><span class='numscroller' data-min='1'
+                    data-max='1000' data-delay='5' data-increment='10' id="active"></span></h4>
+                <h3 style="color: white;" id="recovered"><span class='numscroller' data-min='1' data-max='1000'
+                    data-delay='5' data-increment='10' id="active"></span></h3>
+
+                <p style="color: white;">Эдгэрсэн</p>
+              </div>
+              <div class="icon">
+                <i class="nav-icon fas fa-virus-slash"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h4 style="margin-bottom: 0%" id="todayDeaths"><span class='numscroller' data-min='1' data-max='1000'
+                    data-delay='5' data-increment='10' id="active"></span></h4>
+                <h3 id="deaths"><span class='numscroller' data-min='1' data-max='1000' data-delay='5'
+                    data-increment='10' id="active"></span></h3>
+
+                <p>Нас барсан</p>
+              </div>
+              <div class="icon">
+                <i class="nav-icon fas fa-user-slash"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg col-12">
+            <!-- small box -->
+            <div class="small-box bg-secondary">
+              <div class="inner">
+                <h4 style="margin-bottom: 0%;">&nbsp;</h4>
+                <h3 id="critical"><span class='numscroller' data-min='1' data-max='1000' data-delay='5'
+                    data-increment='10' id="active"></span></h3>
+                <p>Биеийн байдал хүнд</p>
+              </div>
+              <div class="icon">
+                <i class="nav-icon fas fa-procedures"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><i class="nav-icon fas fa-table mr-2"></i>Хүснэгтээр</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-sm table-bordered table-striped table-responsive-xl sortable">
+            <thead>
+              <tr>
+                <th>Улс<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Батлагдсан<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Өнөөдөр батлагдсан<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Нас барсан<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Өнөөдөр нас барсан<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Эдгэрсэн<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Өнөөдөр эдгэрсэн<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Эмчлэгдэж буй<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Биеийн байдал хүнд<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Шинжилгээ<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+                <th>Хүн ам<i class="fas fa-sort" style="float: right; margin-top: 4px; margin-left: 3px;"></i></th>
+              </tr>
+            </thead>
+          </table>
+          <div id='loadingDiv' style="text-align: center; margin-top: 22px;">
+            <h3>Түр хүлээнэ үү?</h3> <img src="{% static "custom/images/spinner-dark.svg" %}" style="width: 80px;" />
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% endblock main_content%}
+
+{% block custom_js %}
+<script>
+  $('.count').each(function () {
+    $(this).prop('Counter', 0).animate({
+      Counter: $(this).text()
+    }, {
+      duration: 4000,
+      easing: 'swing',
+      step: function (now) {
+        $(this).text(Math.ceil(now));
+      }
+    });
+  });
+</script>
+<script type="text/javascript">
+  $.ajax({
+    url: 'https://disease.sh/v3/covid-19/countries/mongolia',
+    dataType: 'json',
+    success: function (data) {
+      $('#cases').text(data.cases);
+      $('#todayCases').text('+' + data.todayCases);
+      $('#recovered').text(data.recovered);
+      $('#todayRecovered').text('+' + data.todayRecovered);
+      $('#deaths').text(data.deaths);
+      $('#todayDeaths').text('+' + data.todayDeaths);
+      $('#active').text(data.active);
+      $('#critical').text(data.critical);
+      $('#example').DataTable(data.critical);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert('Error: ' + textStatus + ' - ' + errorThrown);
+    }
+  });
+</script>
+<script type="text/javascript">
+  $.ajax({
+    url: 'https://disease.sh/v3/covid-19/countries',
+    dataType: 'json',
+    success: function (data) {
+      $('#loadingDiv').hide().ajaxStart( function() {
+$(this).show();  // show Loading Div
+} ).ajaxStop ( function(){
+$(this).hide(); // hide loading div
+});
+      for (var i = 0; i < data.length; i++) {
+        var row = $('<tr><td style="font-weight: 700;">' + data[i].country + '</td><td>' + data[i].cases + '</td><td>' + data[i].todayCases + '</td><td>' + data[i].deaths + '</td><td>' + data[i].todayDeaths + '</td><td>' + data[i].recovered + '</td><td>' + data[i].todayRecovered + '</td><td>' + data[i].active + '</td><td>' + data[i].critical + '</td><td>' + data[i].tests + '</td><td>' + data[i].population + '</td></tr>');
+        $('table').append(row);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert('Error: ' + textStatus + ' - ' + errorThrown);
+    }
+  });
+</script>
+<script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
+<script src="{% static "plugins/datatables-responsive/js/responsive.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/jszip/jszip.min.js" %}"></script>
+<script src="{% static "plugins/pdfmake/pdfmake.min.js" %}"></script>
+<script src="{% static "plugins/pdfmake/vfs_fonts.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.html5.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.print.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.colVis.min.js" %}"></script>
+<script src="{% static "custom/js/toll.js" %}"></script>
+<script src="{% static "custom/js/jsontotable.js" %}"></script>
+<script src="{% static "custom/js/sort.js" %}"></script>
+
+<script>
+const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+const comparer = (idx, asc) => (a, b) => ((v1, v2) => 
+    v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+    )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+// do the work...
+document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+    const table = th.closest('table');
+    Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+        .forEach(tr => table.appendChild(tr) );
+})));
+</script>
+{% endblock custom_js %}

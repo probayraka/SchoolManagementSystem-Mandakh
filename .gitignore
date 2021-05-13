@@ -1,0 +1,5 @@
+/.vs/
+sent_mails/
+__pycache__/
+run.sh
+.DS_Store

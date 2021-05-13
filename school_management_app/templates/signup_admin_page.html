@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>School Management System | Log in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="{% static "custom/images/icons/icon.png" %}" rel="icon">
+  <link href="../stati/static/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/vendor/animate/animate.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/vendor/css-hamburgers/hamburgers.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/vendor/select2/select2.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/css/util.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/css/main.css" %}" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/css/header.css" %}">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static "custom/css/dark-mode-login.css" %}">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap" rel="stylesheet">
+</head>
+<body style="background-color: rgb(31, 31, 31);">
+  <!-- Navbar -->
+  <div class="limiter">
+    <div class="container-custom">
+      <nav class="navbar navbar-expand-lg navbar-dark" style="width: 100%">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img src="{% static "custom/images/icons/home-icon.png" %}" width="30" height="30"
+              class="d-inline-block align-top" alt="" />
+            OSMS
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Login</a>
+              </li>
+            </ul>
+            <!-- <div class="my-2 my-lg-0">
+              <button class="btn mr-4 en-button"></button>
+              <button class="btn mr-4 mn-button"></button>
+            </div> -->
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="darkSwitch">
+              <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!-- Form -->
+    <div class="container-login100 noselect">
+      <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30 bg-light dark-animation" data-aos="zoom-in">
+        <form class="login100-form validate-form" action="/do_admin_signup" method="post" id="demo-form" enctype="multipart/form-data">
+          {% csrf_token %}
+          <span class="login100-form-title p-b-55">Admin Register</span>
+
+          <div class="wrap-input100 validate-input m-b-16" data-validate="И-Мэйлээ хийнэ үү?">
+            <input type="email" class="input100" placeholder="E-Mail" name="email" />
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <span class="lnr lnr-envelope"></span>
+            </span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-16" data-validate="Хэрэглэгчийн нэрээ хийнэ үү?">
+            <input type="text" class="input100" placeholder="Username" name="username" />
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <span class="lnr lnr-user"></span>
+            </span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-16" data-validate="Нууц үгээ хийнэ үү?">
+            <input type="password" class="input100" placeholder="Password" name="password" />
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <span class="lnr lnr-lock"></span>
+            </span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-16" data-validate="Зургаа хийнэ үү?">
+            <input type="file" class="input100-img" placeholder="Image" name="profile_pic" id="inputGroupFile01" accept=".png,.jpg,.jpeg,">
+            <label class="input100-img-label" for="inputGroupFile01">Choose Image</label>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <span class="lnr lnr-picture"></span>
+            </span>
+          </div>
+          <p id="GFG_DOWN" style="color:#adadad; font-size: 17px; font-weight: bold;">
+          </p>
+
+          <div class="container-login100-form-btn p-t-25">
+            <button type="submit" class="login100-form-btn">Register</button>
+          </div>
+
+          {% if messages %}
+          {% for message in messages %}
+          {% if message.tags == 'error' %}
+          <div class="alert alert_error mt-4" style="width: 100%;">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <strong>{{ message }}</strong>
+          </div>
+          {% endif %}
+          {% if message.tags == 'success' %}
+          <div class="alert alert_success mt-4" style="width: 100%;">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+            <strong>{{ message }}</strong>
+          </div>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+
+          <div class="text-center w-full p-t-35"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script src="{% static "custom/vendor/jquery/jquery-3.2.1.min.js" %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="{% static "custom/vendor/select2/select2.min.js" %}"></script>
+<script src="{% static "custom/js/main.js" %}"></script>
+<script src="{% static "custom/js/dark-mode-switch.js" %}"></script>
+<script>
+  AOS.init();
+</script>
+<script type="application/javascript">
+  $('input[type="file"]').change(function(e){
+      var fileName = e.target.files[0].name;
+      $('.input100-img-label').html(fileName);
+  });
+</script>
+<script>
+  var down = document.getElementById('GFG_DOWN');
+  function GFG_Fun() {
+    if ($('#inputGroupFile01')[0].files.length === 0) {
+      down.innerHTML = "No files selected";
+    } else {
+      down.innerHTML = "Some file is selected";
+    }
+  }
+</script>
+
+</body>
+</html>

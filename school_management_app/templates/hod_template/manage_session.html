@@ -1,0 +1,94 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+{% block custom_css %}
+{% endblock custom_css %}
+<i class="nav-icon fas fa-calendar-alt"></i> Хичээлийн жилийн жагсаалт <a href="/add_session" class="btn btn-success">Хичээлийн жил нэмэх</a>
+{% endblock page_title %}
+{% block main_content %}
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="modal fade" id="deleteReply" tabindex="-1" caller-id="" role="dialog" aria-labelledby="deleteReplyLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteReplyLabel">Хичээлийн жил устгах</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body confirm-delete">
+            Энэ хичээлийн жилийг устгахдаа итгэлтэй байна уу?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"
+              id="confirmDeleteButtonModal">Устгах</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Хичээлийн жилийн жагсаалт</h3>
+          </div>
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Эхлэх огноо</th>
+                  <th>Дуусах огноо</th>
+                  <th>Үйлдэл</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for session in sessions %}
+                <tr>
+                  <td style="width: 100px;">{{ session.id }}</td>
+                  <td>{{ session.session_start_year }}</td>
+                  <td>{{ session.session_end_year }}</td>
+                  <td style="width: 110px;">
+                    <!-- <a href="/edit_session/{{ session.id }}" class="btn btn-success">Edit</a> -->
+                    <a href="/delete_session/{{ session.id }}" title="Delete" data-toggle="modal"
+                      data-target="#deleteReply" id="deleteButton{{session.id}}"
+                      class="btn btn-danger ml-1 confirm-delete">Устгах</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <div class="form-group">
+              {% if messages %}
+              {% for message in messages %}
+              {% if message.tags == 'error' %}
+              <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+              {% endif %}
+              {% if message.tags == 'success' %}
+              <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+              {% endif %}
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% block custom_js %}
+<script type="text/javascript">
+  $(document).on('click', '.confirm-delete', function () {
+    $("#deleteReply").attr("caller-id", $(this).attr("id"));
+  });
+
+  $(document).on('click', '#confirmDeleteButtonModal', function () {
+    var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+    window.location = $("#".concat(caller)).attr("href");
+  });
+</script>
+{% endblock custom_js %}
+{% endblock main_content %}

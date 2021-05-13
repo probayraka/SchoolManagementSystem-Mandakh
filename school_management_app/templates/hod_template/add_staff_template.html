@@ -1,0 +1,137 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+<i class="nav-icon fas fa-chalkboard-teacher"></i> Багш нэмэх <a href="/manage_staff" class="btn btn-success">Багш нарын жагсаалт</a>
+{% endblock page_title %}
+{% block main_content %}
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Багш нэмэх</h3>
+          </div>
+          <form role="form" action="/add_staff_save" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+              <div class="form-group">
+                <label>И-Мэйл</label>
+                <input type="email" class="form-control" name="email" placeholder="И-Мэйл" id="id_email"
+                  autocomplete="off" required>
+              </div>
+              <div class="form-group">
+                <label>Нууц үг</label>
+                <input type="password" class="form-control" placeholder="Нууц үг" name="password" required>
+              </div>
+              <div class="form-group">
+                <label>Овог</label>
+                <input type="text" class="form-control" placeholder="Овог" name="first_name">
+              </div>
+              <div class="form-group">
+                <label>Нэр</label>
+                <input type="text" class="form-control" placeholder="Нэр" name="last_name">
+              </div>
+              <div class="form-group">
+                <label>Хэрэглэгчийн нэр</label>
+                <input type="text" class="form-control" placeholder="Хэрэглэгчийн нэр" name="username" id="id_username"
+                  autocomplete="off" required>
+              </div>
+              <div class="form-group">
+                <label>Хаяг</label>
+                <input type="text" class="form-control" placeholder="Хаяг" name="address">
+              </div>
+              <div class="form-group">
+                <label>Зураг</label>
+                <input type="file" class="form-control" name="profile_pic" accept=".png,.jpg,.jpeg,">
+              </div>
+              <div class="form-group">
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == 'error' %}
+                <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                {% endif %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary btn-block">Хадгалах</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+  $(document).ready(function () {
+    $("#id_email").keyup(function () {
+      var email = $(this).val();
+
+      if (email != "") {
+        $.ajax({
+          url: '{% url 'check_email_exist' %}',
+          type: 'POST',
+          data: { email: email }
+        })
+          .done(function (response) {
+            console.log(response);
+            if (response == "True") {
+              $(".email_error").remove();
+              $("<span class='email_error' style='padding: 5px;color: red;font-weight: bold;'>Энэ И-Мэйл ашиглагдсан байна.</span>").insertAfter("#id_email");
+            }
+            else {
+              $(".email_error").remove();
+              $("<span class='email_error' style='padding: 5px;color: green;font-weight: bold;'>Имэйл боломжтой.</span>").insertAfter("#id_email");
+            }
+          })
+          .fail(function () {
+            console.log("failed");
+          })
+      }
+      else {
+        $(".email_error").remove();
+      }
+
+    });
+
+    $("#id_username").keyup(function () {
+      var username = $(this).val();
+
+      if (username != "") {
+        $.ajax({
+          url: '{% url 'check_username_exist' %}',
+          type: 'POST',
+          data: { username: username }
+        })
+          .done(function (response) {
+            console.log(response);
+            if (response == "True") {
+              $(".username_error").remove();
+              $("<span class='username_error' style='padding: 5px;color: red;font-weight: bold;'>Энэ хэрэглэгчийн нэр ашиглагдсан байна.</span>").insertAfter("#id_username");
+            }
+            else {
+              $(".username_error").remove();
+              $("<span class='username_error' style='padding: 5px;color: green;font-weight: bold;'>Хэрэглэгчийн нэр боломжтой.</span>").insertAfter("#id_username");
+            }
+          })
+          .fail(function () {
+            console.log("failed");
+          })
+      }
+      else {
+        $(".username_error").remove();
+      }
+
+    });
+
+  });
+</script>
+{% endblock custom_js %}

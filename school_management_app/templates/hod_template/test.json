@@ -1,0 +1,33 @@
+{
+  "updated": 1620319995569,
+  "country": "Mongolia",
+  "countryInfo": {
+    "_id": 496,
+    "iso2": "MN",
+    "iso3": "MNG",
+    "lat": 46,
+    "long": 105,
+    "flag": "https://disease.sh/assets/img/flags/mn.png"
+  },
+  "cases": 42464,
+  "todayCases": 940,
+  "deaths": 142,
+  "todayDeaths": 12,
+  "recovered": 27242,
+  "todayRecovered": 1601,
+  "active": 15080,
+  "critical": 123,
+  "casesPerOneMillion": 12780,
+  "deathsPerOneMillion": 43,
+  "tests": 2754347,
+  "testsPerOneMillion": 828971,
+  "population": 3322610,
+  "continent": "Asia",
+  "oneCasePerPeople": 78,
+  "oneDeathPerPeople": 23399,
+  "oneTestPerPeople": 1,
+  "undefined": 4539,
+  "activePerOneMillion": 4538.6,
+  "recoveredPerOneMillion": 8198.98,
+  "criticalPerOneMillion": 37.02
+}
