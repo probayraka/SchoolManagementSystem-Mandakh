@@ -54,6 +54,18 @@ News:
 
 ![News](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/news.png?raw=true)
 
+Grades:
+
+![Grades](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/grade.png?raw=true)
+
+Attendance:
+
+![Attendance](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/attendance.png?raw=true)
+
+COVID-19:
+
+![COVID-19](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/covid19.png?raw=true)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
