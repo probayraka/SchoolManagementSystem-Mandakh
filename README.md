@@ -1,5 +1,5 @@
 # Online School Management System
-![Logo](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Logo.png?raw=true)
+![Logo](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Logo.png?raw=true)
 
 ## Installation
 
