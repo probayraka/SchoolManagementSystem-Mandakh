@@ -3,11 +3,17 @@
 <script src="{% static 'plugins/ckeditor/ckeditor.js' %}"></script>
 <style>
   .zoomD {
-    opacity: 1;
-    width: 350px;
+    max-width: 100%;
     height: auto;
-    cursor: pointer;
-    transition: transform .2s;
+    cursor: zoom-in;
+  }
+
+  @media screen and (min-width: 992px) {
+    .zoomD {
+      max-width: 360px;
+      height: auto;
+      transition: transform .2s;
+    }
   }
 
   .zoomD:hover{
@@ -27,6 +33,7 @@
     visibility: hidden;
     opacity: 0;
     transition: all ease 0.4s;
+    cursor: zoom-out;
   }
 
   #lb-back.show {
@@ -37,8 +44,15 @@
   #lb-img {
     position: relative;
     top: 53%;
+    left: 0%;
     transform: translateY(-50%);
     text-align: center;
+  }
+
+  @media screen and (min-width: 992px) {
+    #lb-img {
+      left: 7%;
+    }
   }
 
   #lb-img img {

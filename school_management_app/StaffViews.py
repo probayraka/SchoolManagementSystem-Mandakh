@@ -13,7 +13,7 @@ from django.core.files.storage import FileSystemStorage
 import datetime
 
 from school_management_app.models import Subjects, SessionYearModel, Students, Attendance, AttendanceReport, \
-    LeaveReportStaff, Staffs, FeedBackStaffs, CustomUser, Courses, NotificationStaffs, StudentResult, OnlineClassRoom, TNews, TComment
+    LeaveReportStaff, Staffs, FeedBackStaffs, CustomUser, Courses, NotificationStaffs, StudentResult, TNews, TComment
 
 
 def staff_home(request):
@@ -405,40 +405,6 @@ def fetch_result_student(request):
         return HttpResponse(json.dumps(result_data))
     else:
         return HttpResponse("False")
-
-def start_live_classroom(request):
-    user=CustomUser.objects.get(id=request.user.id)
-    staff_pro=Staffs.objects.get(admin=user)
-    subjects=Subjects.objects.filter(staff_id=request.user.id)
-    session_years=SessionYearModel.object.all()
-    staff=Staffs.objects.get(admin=request.user.id)
-    notifications=NotificationStaffs.objects.filter(staff_id=staff.id)
-    return render(request,"staff_template/start_live_classroom.html",{"notifications":notifications,"subjects":subjects,"session_years":session_years,"staff_pro":staff_pro})
-
-def start_live_classroom_process(request):
-    session_year=request.POST.get("session_year")
-    subject=request.POST.get("subject")
-    
-
-    subject_obj=Subjects.objects.get(id=subject)
-    session_obj=SessionYearModel.object.get(id=session_year)
-    checks=OnlineClassRoom.objects.filter(subject=subject_obj,session_years=session_obj,is_active=True).exists()
-    if checks:
-        data=OnlineClassRoom.objects.get(subject=subject_obj,session_years=session_obj,is_active=True)
-        room_pwd=data.room_pwd
-        roomname=data.room_name
-    else:
-        room_pwd=datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
-        roomname=datetime.now().strftime('%Y%m-%d%H-%M%S-') + str(uuid4())
-        staff_obj=Staffs.objects.get(admin=request.user.id)
-        onlineClass=OnlineClassRoom(room_name=roomname,room_pwd=room_pwd,subject=subject_obj,session_years=session_obj,started_by=staff_obj,is_active=True)
-        onlineClass.save()
-
-    return render(request,"staff_template/live_class_room_start.html",{"username":request.user.username,"password":room_pwd,"roomid":roomname,"subject":subject_obj.subject_name,"session_year":session_obj})
-
-
-def returnHtmlWidget(request):
-    return render(request,"widget.html")
 
 def tcovid19(request):
     user=CustomUser.objects.get(id=request.user.id)

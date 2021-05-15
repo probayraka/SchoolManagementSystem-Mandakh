@@ -1,5 +1,5 @@
 # Online School Management System
-![Logo](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Logo.png?raw=true)
+![Logo](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Logo.png?raw=true)
 
 ## Installation
 
@@ -32,27 +32,27 @@ http://osms.exdi.us
 ## Screenshots
 Login:
 
-![Login](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Screenshots/login.png?raw=true)
+![Login](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/login.png?raw=true)
 
 Admin Panel:
 
-![Admin](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Screenshots/admin.png?raw=true)
+![Admin](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/admin.png?raw=true)
 
 Teacher Panel:
 
-![Teacher](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Screenshots/teacher.png?raw=true)
+![Teacher](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/teacher.png?raw=true)
 
 Student Panel:
 
-![Student](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Screenshots/student.png?raw=true)
+![Student](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/student.png?raw=true)
 
 Parents Panel:
 
-![Parents](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Screenshots/parent.png?raw=true)
+![Parents](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/parent.png?raw=true)
 
 News:
 
-![News](https://github.com/probayraka/SchoolManagementSystem-Mandakh/blob/main/media/Screenshots/news.png?raw=true)
+![News](https://github.com/probayraka/SchoolManagementSystem/blob/main/media/Screenshots/news.png?raw=true)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

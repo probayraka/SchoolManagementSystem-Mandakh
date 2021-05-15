@@ -1310,8 +1310,8 @@ def send_student_notification(request):
         "notification":{
             "title":"School Management System",
             "body":message,
-            "click_action": "https://studentmanagementsystem22.herokuapp.com/student_all_notification",
-            "icon": "http://studentmanagementsystem22.herokuapp.com/static/dist/img/user2-160x160.jpg"
+            "click_action": "https://schoolmanagementsystem22.herokuapp.com/student_all_notification",
+            "icon": "http://schoolmanagementsystem22.herokuapp.com/static/dist/img/user2-160x160.jpg"
         },
         "to":token
     }
@@ -1333,8 +1333,8 @@ def send_staff_notification(request):
         "notification":{
             "title":"School Management System",
             "body":message,
-            "click_action":"https://studentmanagementsystem22.herokuapp.com/staff_all_notification",
-            "icon":"http://studentmanagementsystem22.herokuapp.com/static/dist/img/user2-160x160.jpg"
+            "click_action":"https://schoolmanagementsystem22.herokuapp.com/staff_all_notification",
+            "icon":"http://schoolmanagementsystem22.herokuapp.com/static/dist/img/user2-160x160.jpg"
         },
         "to":token
     }
@@ -1356,8 +1356,8 @@ def send_parent_notification(request):
         "notification":{
             "title":"School Management System",
             "body":message,
-            "click_action":"https://studentmanagementsystem22.herokuapp.com/parent_all_notification",
-            "icon":"http://studentmanagementsystem22.herokuapp.com/static/dist/img/user2-160x160.jpg"
+            "click_action":"https://schooltmanagementsystem22.herokuapp.com/parent_all_notification",
+            "icon":"http://schoolmanagementsystem22.herokuapp.com/static/dist/img/user2-160x160.jpg"
         },
         "to":token
     }
