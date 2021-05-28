@@ -6,9 +6,7 @@
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install OSMS.
 
 ```bash
-pip install django
-pip install requests
-pip install django-ckeditor
+pip install -r requirements.txt
 ```
 
 ## Demo
