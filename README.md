@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 ## Demo
 
-http://osms.exdi.us
+http://online.exdi.us
 
 | **User Type** | **E-Mail** | **Password** |
 | ------ | ------ | ------ |
