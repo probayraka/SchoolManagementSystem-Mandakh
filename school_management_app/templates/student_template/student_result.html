@@ -18,9 +18,8 @@
           <div class="card-header">
             <h3 class="card-title">Дүн</h3>
           </div>
-
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -39,17 +38,17 @@
                   <td>{{ row.subject_assignment_marks }}</td>
                   <td>
                     {% if row.subject_assignment_marks >= 60 %}
-                    <span class="alert alert-success">Тэнцсэн</span>
+                    <span class="alert alert-success shadow-custom">Тэнцсэн</span>
                     {% else %}
-                    <span class="alert alert-danger">Унасан</span>
+                    <span class="alert alert-danger shadow-custom">Унасан</span>
                     {% endif %}
                   </td>
                   <td>{{ row.subject_exam_marks }}</td>
                   <td>
                     {% if row.subject_exam_marks >= 60 %}
-                    <span class="alert alert-success">Тэнцсэн</span>
+                    <span class="alert alert-success shadow-custom">Тэнцсэн</span>
                     {% else %}
-                    <span class="alert alert-danger">Унасан</span>
+                    <span class="alert alert-danger shadow-custom">Унасан</span>
                     {% endif %}
                   </td>
                 </tr>

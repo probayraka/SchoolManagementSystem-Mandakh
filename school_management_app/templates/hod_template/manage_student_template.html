@@ -52,7 +52,7 @@
   }
 </style>
 {% endblock custom_css %}
-<i class="nav-icon fas fa-user-graduate"></i> Сурагчдын жагсаалт <a href="/add_student" class="btn btn-success">Сурагч нэмэх</a>
+<i class="nav-icon fas fa-user-graduate"></i> Сурагчдын жагсаалт <a href="/add_student" class="btn btn-success shadow-custom">Сурагч нэмэх</a>
 {% endblock page_title %}
 {% block main_content %}
     <!-- Main content -->
@@ -73,8 +73,8 @@
               Та энэ сурагчийн хаягийг устгахдаа итгэлтэй байна уу?
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal"
+              <button type="button" class="btn btn-secondary shadow-custom" data-dismiss="modal">Болих</button>
+              <button type="button" class="btn btn-danger shadow-custom" data-dismiss="modal"
                 id="confirmDeleteButtonModal">Устгах</button>
             </div>
           </div>
@@ -95,15 +95,15 @@
                   {% if messages %}
                   {% for message in messages %}
                   {% if message.tags == 'error' %}
-                  <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                  <div class="alert alert-danger shadow-custom" style="margin-top:10px">{{ message }}</div>
                   {% endif %}
                   {% if message.tags == 'success' %}
-                  <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                  <div class="alert alert-success shadow-custom" style="margin-top:10px">{{ message }}</div>
                   {% endif %}
                   {% endfor %}
                   {% endif %}
                 </div>
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -136,9 +136,9 @@
                       <td>{{ student.course_id.course_name }}</td>
                       <td>{{ student.admin.last_login }}</td>
                       <td>{{ student.admin.date_joined }}</td>
-                      <td style="width: 150px;"><a href="{% url 'edit_student' student_id=student.admin.id %}" class="btn btn-success">Засах</a>
+                      <td style="width: 150px;"><a href="{% url 'edit_student' student_id=student.admin.id %}" class="btn btn-success shadow-custom">Засах</a>
                         <a href="/delete_student/{{ student.admin.id }}" title="Delete"
-                        data-toggle="modal" data-target="#deleteReply" id="deleteButton{{student.admin.id}}" class="btn btn-danger ml-1 confirm-delete">Устгах</a></td>
+                        data-toggle="modal" data-target="#deleteReply" id="deleteButton{{student.admin.id}}" class="btn btn-danger ml-1 confirm-delete shadow-custom">Устгах</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>

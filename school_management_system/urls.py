@@ -81,8 +81,11 @@ urlpatterns = [
     path('admin_profile', HodViews.admin_profile,name="admin_profile"),
     path('admin_profile_save', HodViews.admin_profile_save,name="admin_profile_save"),
     path('admin_send_notification_staff', HodViews.admin_send_notification_staff,name="admin_send_notification_staff"),
+    path('delete_staff_notifications/<str:id>', HodViews.delete_staff_notifications,name="delete_staff_notifications"),
     path('admin_send_notification_student', HodViews.admin_send_notification_student,name="admin_send_notification_student"),
+    path('delete_student_notifications/<str:id>', HodViews.delete_student_notifications,name="delete_student_notifications"),
     path('admin_send_notification_parent', HodViews.admin_send_notification_parent,name="admin_send_notification_parent"),
+    path('delete_parent_notifications/<str:id>', HodViews.delete_parent_notifications,name="delete_parent_notifications"),
     path('send_student_notification', HodViews.send_student_notification,name="send_student_notification"),
     path('send_staff_notification', HodViews.send_staff_notification,name="send_staff_notification"),
     path('send_parent_notification', HodViews.send_parent_notification,name="send_parent_notification"),
@@ -117,7 +120,7 @@ urlpatterns = [
     path('view_parent_news_comment_save', HodViews.view_parent_news_comment_save, name="view_parent_news_comment_save"),
     path('view_parent_news_comment_edit_save', HodViews.view_parent_news_comment_edit_save, name="view_parent_news_comment_edit_save"),
     path('delete_parent_comment/<str:news_id>/<str:comment_id>', HodViews.delete_pcomment, name="delete_pcomment"),
-
+    
     #Staff URL Path
     path('staff_home', StaffViews.staff_home, name="staff_home"),
     path('staff_take_attendance', StaffViews.staff_take_attendance, name="staff_take_attendance"),

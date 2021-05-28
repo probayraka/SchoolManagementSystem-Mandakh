@@ -50,13 +50,20 @@
   .first_letter:first-letter{
     visibility:visible;
   }
+  .nav-link.active{
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.267) !important;
+    color: rgb(255, 255, 255) !important;
+  }
+  .nav-link {
+    color: rgb(46, 46, 46) !important;
+  }
 </style>
 {% endblock custom_css %}
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/staff_home" class="brand-link">
       <img src="{% static "dist/img/home-icon.png" %}" alt="logo" class="brand-image img-circle elevation-3" style="opacity: 1">
-      <span class="brand-text font-weight-light">Сургуулийн нэр</span>
+      <span class="brand-text font-weight-bold">Сургуулийн нэр</span>
     </a>
 
     <!-- Sidebar -->
@@ -67,7 +74,7 @@
           <img src="{{ staff_pro.profile_pic }}" class="img-circle elevation-2 zoomD" alt="User Image">
         </div>
         <div class="info">
-          <a href="{% url 'staff_profile' %}" class="d-block">
+          <a href="{% url 'staff_profile' %}" class="d-block font-weight-bold">
             {{ user.last_name }}
           </a>
         </div>
@@ -76,9 +83,9 @@
        <!-- SidebarSearch Form -->
        <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Хайх" aria-label="Search">
           <div class="input-group-append">
-            <button class="btn btn-sidebar">
+            <button class="btn btn-sidebar" style="box-shadow: none !important;">
               <i class="fas fa-search fa-fw"></i>
             </button>
           </div>
@@ -86,8 +93,9 @@
       </div>
 
       <!-- Sidebar Menu -->
+      <!-- Home -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
             {% url 'staff_home' as staff_home %}
             <a href="{{ staff_home }}" class="nav-link {% if request.path == staff_home %} active {% endif %}">
@@ -97,6 +105,7 @@
               </p>
             </a>
           </li>
+          <!-- News -->
           <li class="nav-item">
             {% url 'staff_news' as staff_news %}
             <a href="{{ staff_news }}" class="nav-link {% if request.path == staff_news %} active {% endif %}">
@@ -106,9 +115,12 @@
               </p>
             </a>
           </li>
+          <!-- Attendance -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chalkboard-teacher"></i>
+            {% url 'staff_take_attendance' as staff_take_attendance %}
+            {% url 'staff_update_attendance' as staff_update_attendance %}
+            <a href="#" class="nav-link {% if request.path == staff_take_attendance %} active {% elif request.path == staff_update_attendance %} active {% endif %}">
+              <i class="nav-icon fas fa-user-check"></i>
               <p>
                 Ирц
                 <i class="right fas fa-angle-left"></i>
@@ -116,7 +128,6 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                {% url 'staff_take_attendance' as staff_take_attendance %}
                 <a href="{{ staff_take_attendance }}"
                   class="nav-link {% if request.path == staff_take_attendance %} active {% endif %}">
                   <i class="nav-icon fas fa-plus"></i>
@@ -126,7 +137,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                {% url 'staff_update_attendance' as staff_update_attendance %}
                 <a href="{{ staff_update_attendance }}"
                   class="nav-link {% if request.path == staff_update_attendance %} active {% endif %}">
                   <i class="nav-icon fas fa-edit"></i>
@@ -137,6 +147,7 @@
               </li>
             </ul>
           </li>
+          <!-- Leave -->
           <li class="nav-item">
             {% url 'staff_apply_leave' as staff_apply_leave %}
             <a href="{{ staff_apply_leave }}" class="nav-link {% if request.path == staff_apply_leave %} active {% endif %}">
@@ -155,8 +166,11 @@
               </p>
             </a>
           </li>
+          <!-- Dun -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            {% url 'staff_add_result' as staff_add_result %}
+            {% url 'edit_student_result' as edit_student_result %}
+            <a href="#" class="nav-link {% if request.path == staff_add_result %} active {% elif request.path == edit_student_result %} active {% endif %}">
               <i class="nav-icon fas fa-graduation-cap"></i>
               <p>
                 Дүн
@@ -165,7 +179,6 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                {% url 'staff_add_result' as staff_add_result %}
                 <a href="{{ staff_add_result }}" class="nav-link {% if request.path == staff_add_result %} active {% endif %}">
                   <i class="nav-icon fas fa-plus"></i>
                   <p>
@@ -174,7 +187,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                {% url 'edit_student_result' as edit_student_result %}
                 <a href="{{ edit_student_result }}"
                   class="nav-link {% if request.path == edit_student_result %} active {% endif %}">
                   <i class="nav-icon fas fa-edit"></i>
@@ -194,7 +206,7 @@
               </p>
             </a>
           </li> -->
-
+          <!-- Notification -->
            <li class="nav-item">
             {% url 'staff_all_notification' as staff_all_notification %}
             <a href="{{ staff_all_notification }}" class="nav-link {% if request.path == staff_all_notification %} active {% endif %}">
@@ -204,6 +216,7 @@
               </p>
             </a>
           </li>
+          <!-- Covid -->
           <li class="nav-item">
             {% url 'tcovid19' as tcovid19 %}
             <a href="{% url 'tcovid19' %}"

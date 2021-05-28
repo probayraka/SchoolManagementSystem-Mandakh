@@ -1,18 +1,10 @@
 [data-theme="dark"] {
   background-color: #111 !important;
   color: rgb(255, 255, 255);
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
 }
 
 [data-theme="dark"] .bg-light {
   background-color: #333 !important;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
 }
 
 [data-theme="dark"] .bg-white {
@@ -24,24 +16,34 @@
 }
 
 [data-theme="dark"] .login100-form-title {
-  color: rgb(233, 233, 233) !important;
-  transition: all 0.4s;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
+  color: rgb(245, 245, 245) !important;
 }
 
 [data-theme="dark"] .dark-text {
-  color: rgb(233, 233, 233) !important;
+  color: rgb(194, 194, 194);
   transition: all 0.4s;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
 
-/* [data-theme="dark"] a {
-  color: rgb(233, 233, 233) !important;
-} */
+.dark-text:hover {
+  color: #d33f8d;
+}
+
+[data-theme="dark"] .dark-input {
+  background-color: #525252 !important;
+  color: #ececec;
+}
+
+[data-theme="dark"] .dark-icon {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .dark-placeholder::placeholder {
+  color: #e0e0e0;
+}
+
 
 [data-theme="dark"] .bg-input {
   background-color: rgb(179, 179, 179) !important;

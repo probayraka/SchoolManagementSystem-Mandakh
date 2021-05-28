@@ -3,6 +3,7 @@
 <i class="nav-icon fas fa-newspaper"></i> Зар, мэдээлэл
 {% endblock page_title %}
 {% block main_content %}
+{% block custom_css %}
 <style>
   .news-c1 {
     padding: 1.2rem;
@@ -13,6 +14,7 @@
     /* border: solid #474747; */
   }
 </style>
+{% endblock custom_css %}
 <section class="content">
   <div class="container">
     <div class="row">
@@ -25,7 +27,7 @@
             <div class="row row-cols-1 row-cols-md-3">
               {% for a in news %}
               <div class="col mb-4">
-                <div class="card" style="border-radius: 15px 15px 0px 0px;">
+                <div class="card shadow-custom" style="border-radius: 15px 15px 0px 0px;">
                   <a href="/parent/view_parent_news/{{ a.id }}">
                     <img src="{{ a.pic }}" class="card-img-top" style="border-radius: 8px 8px 0px 0px;">
                   </a>
@@ -35,7 +37,7 @@
                     </a>
                     <p class="card-text"><small class="text-muted"><i class="fas fa-clock"></i> {{ a.ndate }}</small>
                     </p>
-                    <a href="/parent/view_parent_news/{{ a.id }}" class="btn btn-primary">Цааш унших...</a>
+                    <a href="/parent/view_parent_news/{{ a.id }}" class="btn btn-primary shadow-custom">Цааш унших...</a>
                   </div>
                 </div>
               </div>

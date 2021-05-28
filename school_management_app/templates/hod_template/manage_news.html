@@ -52,7 +52,7 @@
   }
 </style>
 {% endblock custom_css %}
-<i class="nav-icon fas fa-newspaper"></i> Сурагчдын мэдээлэл <a href="/add_student_news" class="btn btn-success"><i class="nav-icon fas fa-plus"></i> Мэдээлэл нэмэх</a>
+<i class="nav-icon fas fa-newspaper"></i> Сурагчдын мэдээлэл <a href="/add_student_news" class="btn btn-success shadow-custom"><i class="nav-icon fas fa-plus"></i> Мэдээлэл нэмэх</a>
 {% endblock page_title %}
 {% block main_content %}
     <section class="content">
@@ -79,7 +79,7 @@
                   {% endfor %}
                   {% endif %}
                 </div>
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -99,9 +99,9 @@
                       <!-- <td>{{ a.ntext }}</td> -->
                       <td style="width: 180px;">{{ a.ndate }}</td>
                       <td style="width: 260px;">
-                        <a href="/view_student_news/{{ a.id }}" class="btn btn-success">Дэлгэрэнгүй</a>
-                        <a href="/edit_student_news/{{ a.id }}" class="btn btn-success">Засах</a>
-                        <a href="/delete_student_news/{{ a.id }}" class="btn btn-danger confirm-delete" title="Delete" data-toggle="modal" data-target="#deleteComment" id="deleteButton{{a.id}}">Устгах</a>
+                        <a href="/view_student_news/{{ a.id }}" class="btn btn-success shadow-custom">Дэлгэрэнгүй</a>
+                        <a href="/edit_student_news/{{ a.id }}" class="btn btn-success shadow-custom">Засах</a>
+                        <a href="/delete_student_news/{{ a.id }}" class="btn btn-danger confirm-delete shadow-custom" title="Delete" data-toggle="modal" data-target="#deleteComment" id="deleteButton{{a.id}}">Устгах</a>
                       </td>
                     </tr>
                     {% endfor %}

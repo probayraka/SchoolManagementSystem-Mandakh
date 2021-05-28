@@ -16,8 +16,8 @@
             <table class="table">
               <tr>
                 <th>ID</th>
-                <th>Эцэг эхийн ID</th>
-                <th>Эцэг эхийн Name</th>
+                <th>Эцэг эхийн нэр</th>
+                <th>Сурагч</th>
                 <th>Санал хүсэлт</th>
                 <th>Илгээсэн огноо</th>
                 <th>Хариулт</th>
@@ -25,8 +25,8 @@
               {% for feedback in feedbacks %}
               <tr>
                 <td>{{ feedback.id }}</td>
-                <td>{{ feedback.parent_id.admin.id }}</td>
                 <td>{{ feedback.parent_id.admin.first_name }} {{ feedback.parent_id.admin.last_name }}</td>
+                <td>{{ feedback.parent_id.student_id.admin.last_name }}</td>
                 <td>{{ feedback.feedback }}</td>
                 <td>{{ feedback.created_at }}</td>
                 <td>
@@ -55,12 +55,13 @@
       </div>
       <div class="modal-body">
         <p>Хариулт бичих : <span id="reply_name"></span></p>
+        <p>Санал хүсэлт : <span id="reply_feedback"></span></p>
         <input type="hidden" id="reply_id" name="reply_id">
         <textarea class="form-control" rows="5" id="reply_message"></textarea>
-        <button id="reply_btn" class="btn btn-info btn-block">Хариулах</button>
+        <button id="reply_btn" class="btn btn-info btn-block mt-3">Хариулах</button>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Болих<</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Болих</button>
       </div>
     </div>
   </div>
@@ -72,9 +73,11 @@
   $(document).ready(function () {
     $(".reply_open_modal").click(function () {
       var id = $(this).parents("tr").children("td:eq(0)").text();
-      var name = $(this).parents("tr").children("td:eq(2)").text();
+      var name = $(this).parents("tr").children("td:eq(1)").text();
+      var feedback = $(this).parents("tr").children("td:eq(3)").text();
       $("#reply_id").val(id);
       $("#reply_name").text(name);
+      $("#reply_feedback").text(feedback);
     });
 
     $(document).on("click", "#reply_btn", function () {

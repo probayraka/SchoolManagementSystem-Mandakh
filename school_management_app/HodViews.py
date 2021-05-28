@@ -1028,19 +1028,61 @@ def admin_send_notification_student(request):
     user=CustomUser.objects.get(id=request.user.id)
     admin=AdminHOD.objects.get(admin=user)
     students=Students.objects.all()
-    return render(request,"hod_template/student_notification.html",{"students":students,"admin":admin})
+    notification=NotificationStudent.objects.all()
+    return render(request,"hod_template/student_notification.html",{"students":students,"admin":admin,"notification":notification})
+
+def delete_student_notifications(request,id):
+    if request.method!="GET":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        try:
+            mv=NotificationStudent.objects.get(id=id)
+            mv.delete()
+            messages.success(request,"Мэдэгдэл амжилттай устгалаа")
+            return HttpResponseRedirect(reverse("admin_send_notification_student"))
+        except:
+            messages.error(request,"Мэдэгдэл устгахад алдаа гарлаа")
+            return HttpResponseRedirect(reverse("admin_send_notification_student"))
 
 def admin_send_notification_staff(request):
     user=CustomUser.objects.get(id=request.user.id)
     admin=AdminHOD.objects.get(admin=user)
     staffs=Staffs.objects.all()
-    return render(request,"hod_template/staff_notification.html",{"staffs":staffs,"admin":admin})
+    notification=NotificationStaffs.objects.all()
+    return render(request,"hod_template/staff_notification.html",{"staffs":staffs,"admin":admin,"notification":notification})
+
+def delete_staff_notifications(request,id):
+    if request.method!="GET":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        try:
+            mv=NotificationStaffs.objects.get(id=id)
+            mv.delete()
+            messages.success(request,"Мэдэгдэл амжилттай устгалаа")
+            return HttpResponseRedirect(reverse("admin_send_notification_staff"))
+        except:
+            messages.error(request,"Мэдэгдэл устгахад алдаа гарлаа")
+            return HttpResponseRedirect(reverse("admin_send_notification_staff"))
 
 def admin_send_notification_parent(request):
     user=CustomUser.objects.get(id=request.user.id)
     admin=AdminHOD.objects.get(admin=user)
     parent=Parents.objects.all()
-    return render(request,"hod_template/parent_notification.html",{"parent":parent,"admin":admin})
+    notification=NotificationParents.objects.all()
+    return render(request,"hod_template/parent_notification.html",{"parent":parent,"admin":admin,"notification":notification})
+
+def delete_parent_notifications(request,id):
+    if request.method!="GET":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        try:
+            mv=NotificationParents.objects.get(id=id)
+            mv.delete()
+            messages.success(request,"Мэдэгдэл амжилттай устгалаа")
+            return HttpResponseRedirect(reverse("admin_send_notification_parent"))
+        except:
+            messages.error(request,"Мэдэгдэл устгахад алдаа гарлаа")
+            return HttpResponseRedirect(reverse("admin_send_notification_parent"))
 
 def add_parent(request):
     user=CustomUser.objects.get(id=request.user.id)
@@ -1195,7 +1237,7 @@ def edit_pnews(request,news_id):
     admin=AdminHOD.objects.get(admin=user)
     if len(PNews.objects.filter(pk=news_id)) == 0:
         messages.error(request,"Мэдээ олдсонгүй")
-        return HttpResponseRedirect(reverse("manage_tnews"))
+        return HttpResponseRedirect(reverse("manage_pnews"))
     news=PNews.objects.get(id=news_id)
     return render(request,"hod_template/edit_pnews_template.html",{"news":news,"admin":admin})
 

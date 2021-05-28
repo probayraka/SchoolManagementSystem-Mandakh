@@ -54,7 +54,7 @@
   }
 </style>
 {% endblock custom_css %}
-<i class="nav-icon fas fa-users"></i> Эцэг эхийн жагсаалт <a href="/add_parent" class="btn btn-success">Эцэг эх нэмэх</a>
+<i class="nav-icon fas fa-users"></i> Эцэг эхийн жагсаалт <a href="/add_parent" class="btn btn-success shadow-custom">Эцэг эх нэмэх</a>
 {% endblock page_title %}
 {% block main_content %}
     <!-- Main content -->
@@ -74,8 +74,8 @@
                 Та энэ эцэг эхийн хаягийг устгахдаа итгэлтэй байна уу?
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                <button type="button" class="btn btn-secondary shadow-custom" data-dismiss="modal">Болих</button>
+                <button type="button" class="btn btn-danger shadow-custom" data-dismiss="modal"
                   id="confirmDeleteButtonModal">Устгах</button>
               </div>
             </div>
@@ -103,7 +103,7 @@
                   {% endfor %}
                   {% endif %}
                 </div>
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -130,9 +130,9 @@
                       <td>{{ a.student_id.admin.last_name }}</td>
                       <td>{{ a.admin.last_login }}</td>
                       <td>{{ a.admin.date_joined }}</td>
-                      <td><a href="/edit_parent/{{ a.admin.id }}" class="btn btn-success">Засах</a>
+                      <td><a href="/edit_parent/{{ a.admin.id }}" class="btn btn-success shadow-custom">Засах</a>
                         <a href="/delete_parent/{{ a.admin.id }}" title="Delete"
-                        data-toggle="modal" data-target="#deleteReply" id="deleteButton{{a.admin.id}}" class="btn btn-danger ml-1 confirm-delete">Устгах</a></td>
+                        data-toggle="modal" data-target="#deleteReply" id="deleteButton{{a.admin.id}}" class="btn btn-danger ml-1 confirm-delete shadow-custom">Устгах</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>

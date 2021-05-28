@@ -1,4 +1,5 @@
 {% load static %}
+{% block custom_css %}
 <style>
   .zoomD {
     cursor: zoom-in;
@@ -42,13 +43,17 @@
     max-height: 92vh;
     height: auto;
   }
+  .nav-link.active{
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.267) !important;
+  }
 </style>
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+{% endblock custom_css %}
+  <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/parent_home" class="brand-link">
       <img src="{% static "dist/img/home-icon.png" %}" alt="logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">Сургуулийн нэр</span>
+           style="opacity: 1">
+      <span class="brand-text font-weight-bold">Сургуулийн нэр</span>
     </a>
 
     <!-- Sidebar -->
@@ -59,12 +64,12 @@
           <img src="{{ parent.profile_pic }}" class="img-circle elevation-2 zoomD" alt="User Image">
         </div>
         <div class="info">
-          <a href="{% url 'parent_profile' %}" class="d-block">{{ user.last_name }}</a>
+          <a href="{% url 'parent_profile' %}" class="d-block font-weight-bold">{{ user.last_name }}</a>
         </div>
       </div>
       <div class="user-panel d-flex">
         <div class="info">
-          <a class="d-block">{{ parent.student_id.admin.last_name }}-н эцэг эх</a>
+          <a class="d-block">Сурагч:</a>
         </div>
       </div>
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -72,7 +77,7 @@
           <img src="{{ parent.student_id.profile_pic }}" class="img-circle elevation-2 zoomD" alt="User Image">
         </div>
         <div class="info">
-          <a class="d-block">{{ parent.student_id.admin.last_name }}</a>
+          <a class="d-block font-weight-bold">{{ parent.student_id.admin.last_name }}</a>
         </div>
       </div>
 
@@ -81,7 +86,7 @@
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Хайх" aria-label="Search">
           <div class="input-group-append">
-            <button class="btn btn-sidebar">
+            <button class="btn btn-sidebar" style="box-shadow: none !important;">
               <i class="fas fa-search fa-fw"></i>
             </button>
           </div>

@@ -2,7 +2,7 @@
 {% block page_title %}
 {% block custom_css %}
 {% endblock custom_css %}
-<i class="nav-icon fas fa-calendar-alt"></i> Хичээлийн жилийн жагсаалт <a href="/add_session" class="btn btn-success">Хичээлийн жил нэмэх</a>
+<i class="nav-icon fas fa-calendar-alt"></i> Хичээлийн жилийн жагсаалт <a href="/add_session" class="btn btn-success shadow-custom">Хичээлийн жил нэмэх</a>
 {% endblock page_title %}
 {% block main_content %}
 
@@ -22,8 +22,8 @@
             Энэ хичээлийн жилийг устгахдаа итгэлтэй байна уу?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal"
+            <button type="button" class="btn btn-secondary shadow-custom" data-dismiss="modal">Болих</button>
+            <button type="button" class="btn btn-danger shadow-custom" data-dismiss="modal"
               id="confirmDeleteButtonModal">Устгах</button>
           </div>
         </div>
@@ -36,7 +36,7 @@
             <h3 class="card-title">Хичээлийн жилийн жагсаалт</h3>
           </div>
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -55,7 +55,7 @@
                     <!-- <a href="/edit_session/{{ session.id }}" class="btn btn-success">Edit</a> -->
                     <a href="/delete_session/{{ session.id }}" title="Delete" data-toggle="modal"
                       data-target="#deleteReply" id="deleteButton{{session.id}}"
-                      class="btn btn-danger ml-1 confirm-delete">Устгах</a>
+                      class="btn btn-danger ml-1 confirm-delete shadow-custom">Устгах</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -65,10 +65,10 @@
               {% if messages %}
               {% for message in messages %}
               {% if message.tags == 'error' %}
-              <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+              <div class="alert alert-danger shadow-custom" style="margin-top:10px">{{ message }}</div>
               {% endif %}
               {% if message.tags == 'success' %}
-              <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+              <div class="alert alert-success shadow-custom" style="margin-top:10px">{{ message }}</div>
               {% endif %}
               {% endfor %}
               {% endif %}

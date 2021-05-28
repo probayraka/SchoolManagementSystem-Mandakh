@@ -52,7 +52,7 @@
   }
 </style>
 {% endblock custom_css %}
-<i class="nav-icon fas fa-newspaper"></i> Эцэг эхийн мэдээлэл <a href="/add_parent_news" class="btn btn-success"><i
+<i class="nav-icon fas fa-newspaper"></i> Эцэг эхийн мэдээлэл <a href="/add_parent_news" class="btn btn-success shadow-custom"><i
     class="nav-icon fas fa-plus"></i> Мэдээ нэмэх</a>
 {% endblock page_title %}
 {% block main_content %}
@@ -72,15 +72,15 @@
               {% if messages %}
               {% for message in messages %}
               {% if message.tags == 'error' %}
-              <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+              <div class="alert alert-danger shadow-custom" style="margin-top:10px">{{ message }}</div>
               {% endif %}
               {% if message.tags == 'success' %}
-              <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+              <div class="alert alert-success shadow-custom" style="margin-top:10px">{{ message }}</div>
               {% endif %}
               {% endfor %}
               {% endif %}
             </div>
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -100,9 +100,9 @@
                   <!-- <td>{{ a.ntext }}</td> -->
                   <td style="width: 180px;">{{ a.ndate }}</td>
                   <td style="width: 260px;">
-                    <a href="/view_parent_news/{{ a.id }}" class="btn btn-success">Дэлгэрэнгүй</a>
-                    <a href="/edit_parent_news/{{ a.id }}" class="btn btn-success">Засах</a>
-                    <a href="/delete_parent_news/{{ a.id }}" class="btn btn-danger confirm-delete" title="Delete"
+                    <a href="/view_parent_news/{{ a.id }}" class="btn btn-success shadow-custom">Дэлгэрэнгүй</a>
+                    <a href="/edit_parent_news/{{ a.id }}" class="btn btn-success shadow-custom">Засах</a>
+                    <a href="/delete_parent_news/{{ a.id }}" class="btn btn-danger confirm-delete shadow-custom" title="Delete"
                       data-toggle="modal" data-target="#deleteComment" id="deleteButton{{a.id}}">Устгах</a>
                   </td>
                 </tr>
@@ -123,8 +123,8 @@
                     Та энэ мэдээг устгахдаа итгэлтэй байна уу?
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    <button type="button" class="btn btn-secondary shadow-custom" data-dismiss="modal">Болих</button>
+                    <button type="button" class="btn btn-danger shadow-custom" data-dismiss="modal"
                       id="confirmDeleteButtonModal1">Устгах</button>
                   </div>
                 </div>

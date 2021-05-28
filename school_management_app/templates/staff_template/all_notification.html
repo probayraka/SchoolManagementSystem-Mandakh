@@ -21,9 +21,10 @@
           </div>
 
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-striped">
               <thead>
                 <tr>
+                  <th>№</th>
                   <th>Мэдэгдэл</th>
                   <th>Огноо</th>
                 </tr>
@@ -31,8 +32,9 @@
               <tbody>
                 {% for notification in notifications %}
                 <tr>
+                  <td style="width: 50px;">{{ notification.id }}</td>
                   <td>{{ notification.message }}</td>
-                  <td>{{ notification.created_at }} - <span class=" text-muted text-sm">{{ notification.created_at | naturaltime }}</span></td>
+                  <td style="width: 310px;">{{ notification.created_at }} - <span class=" text-muted text-sm">{{ notification.created_at | naturaltime }}</span></td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -62,7 +64,7 @@
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      "order": [[ 1, "desc" ]]
+      "order": [[ 0, "desc" ]]
       
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({

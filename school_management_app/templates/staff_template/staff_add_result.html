@@ -1,6 +1,6 @@
 {% extends 'staff_template/base_template.html' %}
 {% block page_title %}
-Дүн бүртгэх
+<i class="nav-icon fas fa-graduation-cap"></i> Дүн бүртгэх
 {% endblock page_title %}
 {% block main_content %}
 <!-- Main content -->
@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <button type="button" class="btn btn-primary btn-block" id="fetch_student">Дүн бүртгэх</button>
+              <button type="button" class="btn btn-primary btn-block shadow-custom" id="fetch_student">Дүн бүртгэх</button>
             </div>
             <div id="student_data" class="card-footer">
             </div>
@@ -87,7 +87,7 @@
           div_data += "</div></div>";
 
           div_data += "<div class='form-group'>";
-          div_data += "<button id='save_attendance' class='btn btn-success btn-block' type='submit'>Хадгалах</button>";
+          div_data += "<button id='save_attendance' class='btn btn-success btn-block shadow-custom' type='submit'>Хадгалах</button>";
           div_data += "</div>";
 
           $("#student_data").html(div_data);

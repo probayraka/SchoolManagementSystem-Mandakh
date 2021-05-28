@@ -9,8 +9,11 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">Мэдээлэл засах</h3>
+          <div class="card-header d-flex" style="display: flex; align-items: center;">
+            <div class="image">
+              <img src="{{ admin.profile_pic }}" class="img-circle" style="width: 40px;" alt="User Image">
+            </div>
+            <h3 class="card-title ml-3">Мэдээлэл засах</h3>
           </div>
           <form role="form" action="{% url 'admin_profile_save' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}

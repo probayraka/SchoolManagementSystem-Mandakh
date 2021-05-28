@@ -70,8 +70,8 @@ def student_view_attendance_post(request):
     return render(request,"student_template/student_attendance_data.html",{"attendance_reports":attendance_reports,"student":student,"notifications":notifications})
 
 def student_apply_leave(request):
-    staff_obj = Students.objects.get(admin=request.user.id)
-    leave_data=LeaveReportStudent.objects.filter(student_id=staff_obj)
+    student_obj = Students.objects.get(admin=request.user.id)
+    leave_data=LeaveReportStudent.objects.filter(student_id=student_obj)
     user=CustomUser.objects.get(id=request.user.id)
     student=Students.objects.get(admin=user)
     student_notifcation=Students.objects.get(admin=request.user.id)
@@ -82,12 +82,14 @@ def student_apply_leave_save(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("student_apply_leave"))
     else:
+        leave_start_date=request.POST.get("leave_start_date")
+        leave_end_date=request.POST.get("leave_end_date")
         leave_date=request.POST.get("leave_date")
         leave_msg=request.POST.get("leave_msg")
 
         student_obj=Students.objects.get(admin=request.user.id)
         try:
-            leave_report=LeaveReportStudent(student_id=student_obj,leave_date=leave_date,leave_message=leave_msg,leave_status=0)
+            leave_report=LeaveReportStudent(student_id=student_obj,leave_start_date=leave_start_date,leave_end_date=leave_end_date,leave_message=leave_msg,leave_status=0)
             leave_report.save()
             messages.success(request, "Чөлөөний хүсэлт амжилттай илгээлээ")
             return HttpResponseRedirect(reverse("student_apply_leave"))

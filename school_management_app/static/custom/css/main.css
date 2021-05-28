@@ -963,3 +963,7 @@ button.close {
 .custom-control-label, .custom-control{
   cursor: pointer;
 }
+
+.forgot-password-text:hover{
+  color: #d33f8d;
+}

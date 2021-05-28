@@ -28,19 +28,63 @@
   <link rel="stylesheet" href="{% static "plugins/summernote/summernote-bs4.css" %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  {% block custom_css %}
+  <link rel="stylesheet" href="{% static "custom/css/style.css" %}">
+  {% block custom_css %} {% endblock custom_css %}
   <style>
     .title-c1 {
       font-size: 20px;
+    }
+  
+    .mobile {
+      font-size: 20px;
+    }
+  
+    .desktop {
+      font-size: 0px;
+    }
+
+    .desktop-demo {
+      font-size: 0px;
+    }
+
+    .title-c2 {
+      font-size: 15px;
+    }
+  
+    .hidden {
+      font-size: 0;
     }
   
     @media screen and (min-width: 992px) {
       .title-c1 {
         font-size: 24px;
       }
+  
+      .mobile {
+        font-size: 0px;
+      }
+  
+      .desktop {
+        font-size: 24px;
+      }
+
+      .desktop-demo {
+        font-size: 1rem;
+        color: #ff1b1b;
+        font-weight: 700;
+        font-family: sans-serif;
+      }
+
+      .title-c2 {
+        font-size: 16px;
+        font-weight: 600;
+      }
+  
+      .hidden {
+        font-size: 16px;
+      }
     }
   </style>
-  {% endblock custom_css %}
   <style>
     ::-webkit-scrollbar {
       width: 13px;
@@ -71,16 +115,23 @@
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
       </ul>
-      <h4 class="title-c1" style="margin-left: 10px;margin-top: 5px;">Багшийн самбар</h4>
-      
+      <h4 class="title-c1" style="margin-left: 10px;margin-top: 5px;">
+        <span class="desktop">Багшийн самбар</span>
+        <span class="mobile">Багш</span>
+      </h4>
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item d-flex">
+          <a class="nav-link">
+            <span class="desktop-demo">DEMO</span>
+          <a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
             {% if notifications.count == 0 %}
             <span class="badge badge-warning navbar-badge"></span>
             {% else %}
-            <span class="badge badge-warning navbar-badge">{{notifications.count}}</span>
+            <span class="badge badge-warning navbar-badge font-weight-bold">{{notifications.count}}</span>
             {% endif %}
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -91,7 +142,7 @@
             {% endif %}
             <div class="dropdown-divider"></div>
             <a href="/staff_all_notification" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i>
+              <i class="fas fa-bell mr-2"></i>
               {% if notifications.count == None %}
               Таньд мэдэгдэл ирээгүй байна.
               {% elif notifications.count == 1 %}
@@ -105,11 +156,21 @@
             <a href="/staff_all_notification" class="dropdown-item dropdown-footer">Бүх мэдэгдлүүдийг харах</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">
-            <i class="fas fa-sign-out-alt"></i> Гарах
+        <!-- User -->
+        <li class="nav-item d-flex">
+          <a class="nav-link title-c2" style="white-space: nowrap; cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="hidden">Тавтай морил, </span>{{ user.last_name }}
+            <i class="fas fa-angle-down"></i>
           </a>
+          <div class="btn-group">
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'staff_profile' %}"><i class="fas fa-user"></i> Профайл</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}" style="color: #ce0000;"><i class="fas fa-sign-out-alt"></i> Гарах</a>
+            </div>
+          </div>
         </li>
+        <!-- User end -->
       </ul>
     </nav>
 
@@ -130,7 +191,7 @@
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{% url 'staff_home' %}">Нүүр</a></li>
+                <li class="breadcrumb-item"><a class="btn btn-primary shadow-custom font-weight-bold" href="{% url 'staff_home' %}"><i class="nav-icon fas fa-tachometer-alt mr-2"></i>Нүүр</a></li>
               </ol>
             </div>
           </div>

@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{% static "plugins/datatables-responsive/css/responsive.bootstrap4.min.css" %}">
 <link rel="stylesheet" href="{% static "plugins/datatables-buttons/css/buttons.bootstrap4.min.css" %}">
 {% endblock custom_css %}
-<i class="nav-icon fas fa-book"></i> Ангийн жагсаалт <a href="/add_course" class="btn btn-success">Анги нэмэх</a>
+<i class="nav-icon fas fa-book"></i> Ангийн жагсаалт <a href="/add_course" class="btn btn-success shadow-custom">Анги нэмэх</a>
 {% endblock page_title %}
 {% block main_content %}
 
@@ -44,15 +44,15 @@
                   {% if messages %}
                   {% for message in messages %}
                   {% if message.tags == 'error' %}
-                  <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                  <div class="alert alert-danger shadow-custom" style="margin-top:10px">{{ message }}</div>
                   {% endif %}
                   {% if message.tags == 'success' %}
-                  <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                  <div class="alert alert-success shadow-custom" style="margin-top:10px">{{ message }}</div>
                   {% endif %}
                   {% endfor %}
                   {% endif %}
                 </div>
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-striped">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -65,10 +65,10 @@
                     <tr>
                       <td style="width: 80px;">{{ course.id }}</td>
                       <td>{{ course.course_name }}</td>
-                      <td style="width: 150px;"><a href="/edit_course/{{ course.id }}" class="btn btn-success">Засах</a>
+                      <td style="width: 150px;"><a href="/edit_course/{{ course.id }}" class="btn btn-success shadow-custom">Засах</a>
                         <a href="/delete_course/{{ course.id }}" title="Delete" data-toggle="modal"
                         data-target="#deleteReply" id="deleteButton{{course.id}}"
-                        class="btn btn-danger ml-1 confirm-delete">Устгах</a></td>
+                        class="btn btn-danger ml-1 confirm-delete shadow-custom">Устгах</a></td>
                     </tr>
                     {% endfor %}
                   </tbody>

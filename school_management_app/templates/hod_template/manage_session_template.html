@@ -2,7 +2,7 @@
 {% block page_title %}
 {% block custom_css %}
 {% endblock custom_css %}
-<i class="nav-icon fas fa-calendar-alt"></i> Хичээлийн жил нэмэх <a href="/manage_session" class="btn btn-success">Хичээлийн жилийн жагсаалт</a>
+<i class="nav-icon fas fa-calendar-alt"></i> Хичээлийн жил нэмэх <a href="/manage_session" class="btn btn-success shadow-custom">Хичээлийн жилийн жагсаалт</a>
 {% endblock page_title %}
 {% block main_content %}
 
@@ -29,17 +29,17 @@
                 {% if messages %}
                 {% for message in messages %}
                 {% if message.tags == 'error' %}
-                <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                <div class="alert alert-danger shadow-custom" style="margin-top:10px">{{ message }}</div>
                 {% endif %}
                 {% if message.tags == 'success' %}
-                <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                <div class="alert alert-success shadow-custom" style="margin-top:10px">{{ message }}</div>
                 {% endif %}
                 {% endfor %}
                 {% endif %}
               </div>
             </div>
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary btn-block">Нэмэх</button>
+              <button type="submit" class="btn btn-primary btn-block shadow-custom">Нэмэх</button>
             </div>
           </form>
         </div>

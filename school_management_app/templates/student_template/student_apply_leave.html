@@ -1,7 +1,18 @@
 {% extends 'student_template/base_template.html' %}
+{% load static %}
 {% block page_title %}
 <i class="nav-icon fas fa-sign-out-alt"></i> Чөлөө авах
 {% endblock page_title %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-responsive/css/responsive.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-buttons/css/buttons.bootstrap4.min.css" %}">
+<style>
+  .show-read-more .more-text{
+      display: none;
+  }
+</style>
+{% endblock custom_css %}
 {% block main_content %}
 
 <section class="content">
@@ -13,16 +24,19 @@
             <h3 class="card-title">Чөлөө авах</h3>
           </div>
           <form action="{% url 'student_apply_leave_save' %}" method="post">
+            {% csrf_token %}
             <div class="card-body">
-
               <div class="form-group">
-                <label>Огноо </label>
-                {% csrf_token %}
-                <input type="date" name="leave_date" class="form-control" placeholder="Leave Date" required>
+                <label>Эхлэх Огноо:</label>
+                <input type="date" name="leave_start_date" class="form-control" placeholder="Leave Date" required>
+              </div>
+              <div class="form-group">
+                <label>Дуусах Огноо:</label>
+                <input type="date" name="leave_end_date" class="form-control" placeholder="Leave Date" required>
               </div>
               <div class="form-group">
                 <label>Чөлөө авах шалтгаан</label>
-                <textarea class="form-control" rows="6" name="leave_msg"></textarea>
+                <textarea required class="form-control" rows="6" name="leave_msg"></textarea>
               </div>
               <div class="form-group">
                 {% if messages %}
@@ -46,36 +60,44 @@
           <div class="card-header">
             <h3 class="card-title">Чөлөөний түүх</h3>
           </div>
-          {% if leave_Data %}
-          <div class="table">
-            <table class="table">
-              <tr>
-                <th>ID</th>
-                <th>Огноо</th>
-                <th>Хүсэлт</th>
-                <th>Хариу</th>
-              </tr>
-              {% for row in leave_data %}
-              <tr>
-                <td>{{ row.id }}</td>
-                <td>{{ row.leave_date }}</td>
-                <td>{{ row.leave_message }}</td>
-                <td>
-                  {% if row.leave_status == 1 %}
-                  <span class="alert alert-success">Зөвшөөрсөн</span>
-                  {% elif row.leave_status == 2 %}
-                  <span class="alert alert-danger">Татгалзсан</span>
-                  {% else %}
-                  <span class="alert alert-info">Хүлээгдэж байна</span>
-                  {% endif %}
-                </td>
-              </tr>
+          {% if leave_data %}
+          <div class="card-body">
+            <table id="example1" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Илгээсэн огноо</th>
+                  <th>Эхлэх огноо</th>
+                  <th>Дуусах огноо</th>
+                  <th>Хүсэлт</th>
+                  <th>Хариу</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in leave_data %}
+                <tr>
+                  <td style="width:50px;">{{ row.id }}</td>
+                  <td style="width:230px;">{{ row.created_at }}</td>
+                  <td style="width:130px;">{{ row.leave_start_date }}</td>
+                  <td style="width:130px;">{{ row.leave_end_date }}</td>
+                  <td class="show-read-more">{{ row.leave_message }}</td>
+                  <td style="width:210px; vertical-align: middle;">
+                    {% if row.leave_status == 1 %}
+                    <span class="alert alert-success">Зөвшөөрсөн</span>
+                    {% elif row.leave_status == 2 %}
+                    <span class="alert alert-danger">Татгалзсан</span>
+                    {% else %}
+                    <span class="alert alert-info">Хүлээгдэж байна</span>
+                    {% endif %}
+                  </td>
+                </tr>
               {% endfor %}
-              {% else %}
-              <div class="card-body">
-                <h4>Чөлөөний түүх байхгүй байна.</h4>
-              </div>
+              </tbody>
             </table>
+          </div>
+          {% else %}  
+          <div class="card-body">
+            <h4>Чөлөөний түүх байхгүй байна.</h4>
           </div>
           {% endif %}
         </div>
@@ -83,4 +105,46 @@
     </div>
   </div>
 </section>
+{% block custom_js %}
+<!-- DataTables  & Plugins -->
+<script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
+<script src="{% static "plugins/datatables-responsive/js/responsive.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/jszip/jszip.min.js" %}"></script>
+<script src="{% static "plugins/pdfmake/pdfmake.min.js" %}"></script>
+<script src="{% static "plugins/pdfmake/vfs_fonts.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.html5.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.print.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.colVis.min.js" %}"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
+<script>
+  $(document).ready(function(){
+      var maxLength = 150;
+      $(".show-read-more").each(function(){
+          var myStr = $(this).text();
+          if($.trim(myStr).length > maxLength){
+              var newStr = myStr.substring(0, maxLength);
+              var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+              $(this).empty().html(newStr);
+              $(this).append(' <a href="javascript:void(0);" class="read-more">(цааш унших...)</a>');
+              $(this).append('<span class="more-text">' + removedStr + '</span>');
+          }
+      });
+      $(".read-more").click(function(){
+          $(this).siblings(".more-text").contents().unwrap();
+          $(this).remove();
+      });
+  });
+</script>
+{% endblock custom_js %}
 {% endblock main_content %}

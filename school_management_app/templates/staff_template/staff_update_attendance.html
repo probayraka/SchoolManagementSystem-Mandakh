@@ -1,6 +1,6 @@
 {% extends 'staff_template/base_template.html' %}
 {% block page_title %}
-Ирцийн мэдээлэл харах
+<i class="nav-icon fas fa-user-check"></i> Ирцийн мэдээлэл харах
 {% endblock page_title %}
 {% block main_content %}
 
@@ -30,7 +30,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-block" id="fetch_attendance">Ирцийн мэдээлэл харах</button>
+                            <button type="button" class="btn btn-primary btn-block shadow-custom" id="fetch_attendance">Ирцийн мэдээлэл харах</button>
                         </div>
                         <div class="form-group" id="attendance_block" style="display:none">
                             <label>Ирцийн огноо </label>
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="form-group" id="fetch_student_block" style="display:none">
-                            <button type="button" class="btn btn-primary btn-block" id="fetch_student">Ирцийн мэдээлэл харах</button>
+                            <button type="button" class="btn btn-primary btn-block shadow-custom" id="fetch_student">Ирцийн мэдээлэл харах</button>
                         </div>
                     </div>
                     <div id="student_data" class="card-footer">
@@ -81,7 +81,7 @@
                         $("#attendance_date").html(html_data);
                     }
                     else {
-                        $("#error_attendance").html("No Attendance Data Found");
+                        $("#error_attendance").html("Ирцийн мэдээлэл байхгүй байна.");
                         $("#error_attendance").show();
                         $("#attendance_block").hide();
                         $("#fetch_student_block").hide();
@@ -89,7 +89,7 @@
                     }
                 })
                 .fail(function () {
-                    alert("Error in Fetching Attendance")
+                    alert("Алдаа гарлаа.")
                     $("#error_attendance").html("");
                     $("#attendance_block").hide();
                     $("#fetch_student_block").hide();
@@ -111,9 +111,9 @@
             })
                 .done(function (response) {
                     var json_data = JSON.parse(response);
-                    var div_data = "<div class='form-group'><label>Student Attendance : </label></div><div class='form-group'><div class='row'>";
+                    var div_data = "<div class='form-group'><label>Сурагчдын ирц: </label></div><div class='form-group'><div class='row'>";
                     for (key in json_data) {
-                        div_data += "<div class='col-lg-3'><div class='form-check'><input type='checkbox' ";
+                        div_data += "<div class='col-lg-3'><div class='form-check'><input class='mr-2' type='checkbox' ";
                         if (json_data[key]['status']) {
                             div_data += "checked='checked'";
                         }
@@ -124,24 +124,24 @@
 
 
                         if (json_data[key]['status']) {
-                            div_data += "<b> [ Present ]</b>";
+                            div_data += "<b style='color: green'> [ Ирсэн ]</b>";
                         }
                         else {
-                            div_data += "<b> [ Absent ]</b>";
+                            div_data += "<b style='color: red'> [ Ирээгүй ]</b>";
                         }
 
                         div_data += "</div></div>";
                     }
                     div_data += "</div></div>";
                     div_data += "<div class='form-group'>";
-                    div_data += "<button id='save_attendance' class='btn btn-success btn-block' type='button'>Save Attendance Data</button>";
+                    div_data += "<button id='save_attendance' class='btn btn-success btn-block shadow-custom' type='button'>Ирц шинэчлэх</button>";
                     div_data += "</div>";
 
                     $("#student_data").html(div_data);
 
                 })
                 .fail(function () {
-                    alert("Error in Fetching Student")
+                    alert("Алдаа гарлаа.")
                 })
 
         })
@@ -169,15 +169,15 @@
                 .done(function (response) {
 
                     if (response == "OK") {
-                        alert("Attendance Save")
+                        alert("Ирц шинэчлэгдлээ.")
                     }
                     else {
-                        alert("Error in Saving Data")
+                        alert("Алдаа гарлаа.")
                     }
                     location.reload()
                 })
                 .fail(function () {
-                    alert("Error in Saving Student")
+                    alert("Алдаа гарлаа.")
                 })
 
         })

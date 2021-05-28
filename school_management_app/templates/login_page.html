@@ -72,28 +72,28 @@
     </div>
     <!-- Form -->
     <div class="container-login100 noselect">
-      <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30 bg-light dark-animation" data-aos="zoom-in">
+      <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30 bg-light" style="transition: all 0.4s; -webkit-transition: all 0.4s; -o-transition: all 0.4s; -moz-transition: all 0.4s;" data-aos="zoom-in">
         <form class="login100-form validate-form" action="/doLogin" method="post" id="demo-form">
           {% csrf_token %}
           <span class="login100-form-title p-b-55">Нэвтрэх</span>
   
           <div class="wrap-input100 validate-input m-b-16" data-validate="Хэрэглэгчийн нэрээ хийнэ үү?">
-            <input type="email" class="input100" placeholder="И-Мэйл" name="email" />
+            <input type="email" class="input100 dark-input dark-placeholder" placeholder="И-Мэйл" name="email" style="transition: all 0.4s; -webkit-transition: all 0.4s; -o-transition: all 0.4s; -moz-transition: all 0.4s;"/>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
-              <span class="lnr lnr-user"></span>
+              <span class="lnr lnr-user dark-icon"></span>
             </span>
           </div>
   
           <div class="wrap-input100 validate-input m-b-16" data-validate="Нууц үгээ хийнэ үү?">
-            <input type="password" class="input100" placeholder="Нууц үг" name="password" id="password-field" />
+            <input type="password" class="input100 dark-input dark-placeholder" placeholder="Нууц үг" name="password" id="password-field" style="transition: all 0.4s; -webkit-transition: all 0.4s; -o-transition: all 0.4s; -moz-transition: all 0.4s;"/>
             <!-- <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password" style="position: relative;float: right;"></span> -->
             <span class="focus-input100"></span>
             <span class="symbol-input100">
-              <span class="lnr lnr-lock"></span>
+              <span class="lnr lnr-lock dark-icon"></span>
             </span>
             <span class="symbol-inputcustom">
-              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password" style="pointer-events: all; cursor: pointer;"></span>
+              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password dark-icon" style="pointer-events: all; cursor: pointer;"></span>
             </span>
           </div>
   
@@ -120,7 +120,7 @@
   
           <div class="text-center w-full p-t-35">
             <span class="txt1">
-              <a style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 700;" href="{% url 'password_reset' %}">Нууц үг сэргээх</a>
+              <a class="dark-text forgot-password-text" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 700;" href="{% url 'password_reset' %}">Нууц үг сэргээх</a>
             </span>
           </div>
         </form>

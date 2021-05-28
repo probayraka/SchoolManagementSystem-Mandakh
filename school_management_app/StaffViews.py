@@ -174,12 +174,13 @@ def staff_apply_leave_save(request):
     if request.method!="POST":
         return HttpResponseRedirect(reverse("staff_apply_leave"))
     else:
-        leave_date=request.POST.get("leave_date")
+        leave_start_date=request.POST.get("leave_start_date")
+        leave_end_date=request.POST.get("leave_end_date")
         leave_msg=request.POST.get("leave_msg")
 
         staff_obj=Staffs.objects.get(admin=request.user.id)
         try:
-            leave_report=LeaveReportStaff(staff_id=staff_obj,leave_date=leave_date,leave_message=leave_msg,leave_status=0)
+            leave_report=LeaveReportStaff(staff_id=staff_obj,leave_start_date=leave_start_date,leave_end_date=leave_end_date,leave_message=leave_msg,leave_status=0)
             leave_report.save()
             messages.success(request, "Чөлөөний хүсэлт амжилттай илгээлээ")
             return HttpResponseRedirect(reverse("staff_apply_leave"))

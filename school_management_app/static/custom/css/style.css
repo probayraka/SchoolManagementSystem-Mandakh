@@ -1,0 +1,19 @@
+.shadow-custom {
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.267) !important;
+}
+
+.breadcrumb-item {
+  margin-top: 10px;
+  display: none;
+}
+
+@media screen and (min-width: 992px) {
+  .breadcrumb-item {
+    margin-top: 0px;
+    display: inline-block;
+  }
+}
+
+.btn {
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.267) !important;
+}

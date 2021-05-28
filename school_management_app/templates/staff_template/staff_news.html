@@ -26,7 +26,7 @@
             <div class="row row-cols-1 row-cols-md-3">
               {% for a in news %}
               <div class="col mb-4">
-                <div class="card" style="border-radius: 15px 15px 0px 0px;">
+                <div class="card shadow-custom" style="border-radius: 15px 15px 0px 0px;">
                   <a href="/view_staff_news/{{ a.id }}"><img src="{{ a.pic }}" class="card-img-top" style="border-radius: 8px 8px 0px 0px;"></a>
                   <div class="card-body">
                     <a href="/view_staff_news/{{ a.id }}" style="color: rgb(36, 36, 36);">
@@ -39,7 +39,7 @@
                       </small>
                       &nbsp;
                     </p>
-                    <a href="/view_staff_news/{{ a.id }}" class="btn btn-primary">Цааш унших...</a>
+                    <a href="/view_staff_news/{{ a.id }}" class="btn btn-primary shadow-custom">Цааш унших...</a>
                   </div>
                 </div>
               </div>

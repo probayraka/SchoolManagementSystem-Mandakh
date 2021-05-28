@@ -1,38 +1,36 @@
 {% extends 'student_template/base_template.html' %}
 {% block custom_css %}
 <style>
-  .col-lg-3.attendance_div_red {
+  .attendance_div_red {
     padding: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
-    background: #f44336;
-    border: 5px solid rgb(250, 147, 147);
+    background: #ff4141;
     text-align: center;
     color: #fff;
     border-radius: 15px;
-    box-shadow: 1px 1px 1px grey;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
 
-  .col-lg-3.attendance_div_green {
+  .attendance_div_green {
     padding: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
-    background: #388e3c;
-    border: 5px solid rgb(175, 255, 151);
+    background: #009c56;
     text-align: center;
     color: #fff;
     border-radius: 15px;
-    box-shadow: 1px 1px 1px grey;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
 </style>
 {% endblock custom_css %}
 {% block page_title %}
-Ирцийн мэдээлэл
-<a href="/student_view_attendance" class="btn btn-success"><i class="nav-icon fas fa-chevron-left"></i> Буцах</a>
+<i class="nav-icon fas fa-user-check"></i> Ирцийн мэдээлэл
+<a href="/student_view_attendance" class="btn btn-success shadow-custom"><i class="nav-icon fas fa-chevron-left"></i> Буцах</a>
 {% endblock page_title %}
 {% block main_content %}
 
@@ -45,17 +43,17 @@
             <h3 class="card-title">Ирцийн мэдээлэл</h3>
           </div>
           <div class="card-body">
-            <div class="row">
+            <div class="row justify-content-center">
               {% if attendance_reports %}
               {% for attendance_report in attendance_reports %}
               {% if attendance_report.status == True %}
-              <div class="col-lg-3 attendance_div_green">
+              <div class="col-lg-2 ml-2 mr-2 attendance_div_green">
                 <b>Огноо : {{ attendance_report.attendance_id.attendance_date }}</b>
                 <br>
                 <b>[ Ирсэн ]</b>
               </div>
               {% else %}
-              <div class="col-lg-3 attendance_div_red">
+              <div class="col-lg-2 ml-2 mr-2 attendance_div_red">
                 <b>Огноо : {{ attendance_report.attendance_id.attendance_date }}</b>
                 <br>
                 <b>[ Ирээгүй ]</b>
@@ -63,7 +61,7 @@
               {% endif %}
               {% endfor %}
               {% else %}
-              <div class="alert alert-danger text-center">Ирцийн мэдээлэл олдсонгүй!</div>
+              <div class="alert alert-danger text-center shadow-custom">Ирцийн мэдээлэл олдсонгүй!</div>
               {% endif %}
             </div>
           </div>

@@ -1,7 +1,18 @@
 {% extends 'hod_template/base_template.html' %}
+{% load static %}
 {% block page_title %}
 <i class="nav-icon fas fa-chalkboard-teacher"></i>  Багшийн чөлөө авах хүсэлт
 {% endblock page_title %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-responsive/css/responsive.bootstrap4.min.css" %}">
+<link rel="stylesheet" href="{% static "plugins/datatables-buttons/css/buttons.bootstrap4.min.css" %}">
+<style>
+  .show-read-more .more-text{
+      display: none;
+  }
+</style>
+{% endblock custom_css %}
 {% block main_content %}
 
 <section class="content">
@@ -12,31 +23,39 @@
           <div class="card-header">
             <h3 class="card-title">Багшийн чөлөө авах хүсэлт</h3>
           </div>
-          <div class="table">
-            <table class="table">
+          <div class="card-body">
+            <table id="example1" class="table  table-striped">
+              <thead>
               <tr>
                 <th>ID</th>
                 <th>Багшийн ID</th>
-                <th>Багшийн Name</th>
-                <th>Чөлөө авах огноо</th>
+                <th>Багшийн нэр</th>
+                <th>Чөлөө эхлэх огноо</th>
+                <th>Чөлөө дуусах огноо</th>
                 <th>Шалтгаан</th>
                 <th>Хүсэлт ирсэн огноо</th>
                 <th>Үйлдэл</th>
               </tr>
+              </thead>
+              <tbody>
               {% for leave in leaves %}
               <tr>
                 <td>{{ leave.id }}</td>
-                <td>{{ leave.staff_id.admin.id }}</td>
+                <td style="width: 130px;">{{ leave.staff_id.admin.id }}</td>
                 <td>{{ leave.staff_id.admin.first_name }} {{ leave.staff_id.admin.last_name }}</td>
-                <td>{{ leave.leave_date }}</td>
-                <td>{{ leave.leave_message }}</td>
-                <td>{{ leave.created_at }}</td>
-                <td>
+                <td style="width: 170px;">{{ leave.leave_start_date }}</td>
+                <td style="width: 170px;">{{ leave.leave_end_date }}</td>
+                <td class="show-read-more">{{ leave.leave_message }}</td>
+                <td style="width: 230px;">{{ leave.created_at }}</td>
+                <td style="width: 250px;">
                   {% if leave.leave_status == 0 %}
-                  <a href="{% url 'staff_approve_leave' leave_id=leave.id %}" class="btn btn-success">Зөвшөөрөх</a>
-                  <a class="btn btn-danger" href="{% url 'staff_disapprove_leave' leave_id=leave.id %}">Татгалзах</a>
+                  <a href="{% url 'staff_approve_leave' leave_id=leave.id %}" class="btn btn-success confirm_approve" data-toggle="modal" data-target="#approveLeave"
+                  id="deleteButton{{leave.id}}">Зөвшөөрөх</a>
+                  <a class="btn btn-danger confirm_disapprove" href="{% url 'staff_disapprove_leave' leave_id=leave.id %}" data-toggle="modal"
+                  data-target="#disapproveLeave" id="deleteButton1{{leave.id}}">Татгалзах</a>
+                  
                   {% elif leave.leave_status == 1 %}
-                  <button class="btn btn-warning" disabled="disabled" data-toggle="modal"
+                  <button class="btn btn-success" disabled="disabled" data-toggle="modal"
                     data-target="#reply_modal">Зөвшөөрсөн</button>
                   {% else %}
                   <button class="btn btn-danger" disabled="disabled" data-toggle="modal"
@@ -45,12 +64,120 @@
                 </td>
               </tr>
               {% endfor %}
+              </tbody>
             </table>
+            <!-- Approve modal -->
+            <div class="modal fade" id="approveLeave" tabindex="-1" caller-id="" role="dialog"
+              aria-labelledby="approveLeaveLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="approveLeaveLabel"><i class="fas fa-check"></i> Чөлөөний хүсэлт
+                      зөвшөөрөх</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body confirm_approve">
+                    Та энэ чөлөөний хүсэлтийг зөвшөөрөхдөө итгэлтэй байна уу?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"
+                      id="confirmDeleteButtonModal">Зөвшөөрөх</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Disapprove modal -->
+            <div class="modal fade" id="disapproveLeave" tabindex="-1" caller-id="" role="dialog"
+              aria-labelledby="disapproveLeaveLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="disapproveLeaveLabel"><i class="fas fa-times"></i> Чөлөөний хүсэлт
+                      татгалзах</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body confirm_disapprove">
+                    Та энэ чөлөөний хүсэлтийг татгалзахдаа итгэлтэй байна уу?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                      id="confirmDeleteButtonModal1">Татгалзах</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+{% block custom_js %}
+<!-- DataTables  & Plugins -->
+<script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
+<script src="{% static "plugins/datatables-responsive/js/responsive.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/dataTables.buttons.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.bootstrap4.min.js" %}"></script>
+<script src="{% static "plugins/jszip/jszip.min.js" %}"></script>
+<script src="{% static "plugins/pdfmake/pdfmake.min.js" %}"></script>
+<script src="{% static "plugins/pdfmake/vfs_fonts.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.html5.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.print.min.js" %}"></script>
+<script src="{% static "plugins/datatables-buttons/js/buttons.colVis.min.js" %}"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
+<script type="text/javascript">
+  $(document).on('click', '.confirm_approve', function () {
+    $("#approveLeave").attr("caller-id", $(this).attr("id"));
+  });
 
+  $(document).on('click', '#confirmDeleteButtonModal', function () {
+    var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+    window.location = $("#".concat(caller)).attr("href");
+  });
+</script>
+<script type="text/javascript">
+  $(document).on('click', '.confirm_disapprove', function () {
+    $("#disapproveLeave").attr("caller-id", $(this).attr("id"));
+  });
+
+  $(document).on('click', '#confirmDeleteButtonModal1', function () {
+    var caller = $("#confirmDeleteButtonModal1").closest(".modal").attr("caller-id");
+    window.location = $("#".concat(caller)).attr("href");
+  });
+</script>
+<script>
+  $(document).ready(function(){
+      var maxLength = 150;
+      $(".show-read-more").each(function(){
+          var myStr = $(this).text();
+          if($.trim(myStr).length > maxLength){
+              var newStr = myStr.substring(0, maxLength);
+              var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+              $(this).empty().html(newStr);
+              $(this).append(' <a href="javascript:void(0);" class="read-more">(цааш унших...)</a>');
+              $(this).append('<span class="more-text">' + removedStr + '</span>');
+          }
+      });
+      $(".read-more").click(function(){
+          $(this).siblings(".more-text").contents().unwrap();
+          $(this).remove();
+      });
+  });
+</script>
+{% endblock custom_js %}
 {% endblock main_content %}

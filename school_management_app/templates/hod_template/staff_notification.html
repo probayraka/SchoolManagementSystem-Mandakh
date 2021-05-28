@@ -19,10 +19,10 @@
             <h3 class="card-title">Багш-руу мэдэгдэл илгээх</h3>
           </div>
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-striped">
               <thead>
                 <tr>
-                  <th style="width: 30px;">ID</th>
+                  <th style="width: 30px;">№</th>
                   <th>Овог</th>
                   <th>Нэр</th>
                   <th>Хэрэглэгчийн нар</th>
@@ -46,6 +46,50 @@
             </table>
           </div>
         </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Илгээсэн мэдэгдлүүд</h3>
+          </div>
+          <div class="card-body">
+            {% if messages %}
+            <div class="form-group">
+              {% for message in messages %}
+              {% if message.tags == 'error' %}
+              <div class="alert alert-danger">{{ message }}</div>
+              {% endif %}
+              {% if message.tags == 'success' %}
+              <div class="alert alert-success">{{ message }}</div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+            <table id="example6" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Овог</th>
+                  <th>Нэр</th>
+                  <th>Мэдэгдэл</th>
+                  <th>Огноо</th>
+                  <th>Үйлдэл</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for a in notification %}
+                <tr>
+                  <td style="width: 34px;">{{ a.id }}</td>
+                  <td style="width: 200px;">{{ a.staff_id.admin.first_name }}</td>
+                  <td style="width: 200px;">{{ a.staff_id.admin.last_name }}</td>
+                  <td>{{ a.message }}</td>
+                  <td style="width: 210px;">{{ a.created_at }}</td>
+                  <td style="width: 75px;"><a href="/delete_staff_notifications/{{ a.id }}" class="btn btn-danger confirm-delete" title="Delete" data-toggle="modal"
+                      data-target="#deleteNotification" id="deleteButton{{a.id}}">Устгах</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -60,7 +104,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <input type="text" name="message" class="form-control" id="message_not">
+          <input required type="text" name="message" class="form-control" id="message_not" placeholder="Мэдэгдэл бичих">
           <input type="hidden" name="student_id" class="form-control" id="student_id">
         </div>
         <div class="form-group">
@@ -74,12 +118,33 @@
   </div>
 </div>
 
+<div class="modal fade" id="deleteNotification" tabindex="-1" caller-id="" role="dialog" aria-labelledby="deleteNotificationLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteNotificationLabel"><i class="fas fa-trash"></i> Мэдэгдэл устгах</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body confirm-delete">
+        Та энэ мэдэгдлийг устгахдаа итгэлтэй байна уу?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Болих</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Устгах</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock main_content %}
 {% block custom_js %}
 <script>
   $(".show_notification").click(function(){
       var student_id=$(this).parents("tr").children("td:eq(0)").text();
-      var student_name=$(this).parents("tr").children("td:eq(3)").text();
+      var student_name=$(this).parents("tr").children("td:eq(2)").text();
       console.log(student_id);
       $("#student_id").val(student_id);
       $("#name_span").text(student_name);
@@ -127,15 +192,23 @@
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+  });
+</script>
+<script>
+  $(function () {
+    $("#example6").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": false,
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
+<script type="text/javascript">
+  $(document).on('click', '.confirm-delete', function () {
+    $("#deleteNotification").attr("caller-id", $(this).attr("id"));
+  });
+
+  $(document).on('click', '#confirmDeleteButtonModal', function () {
+    var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+    window.location = $("#".concat(caller)).attr("href");
   });
 </script>
 {% endblock custom_js %}

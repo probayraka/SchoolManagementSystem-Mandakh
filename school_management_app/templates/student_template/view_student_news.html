@@ -55,9 +55,13 @@
     max-height: 92vh;
     height: auto;
   }
+
+  .shadow-custom {
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.267);
+  }
 </style>
 {% endblock custom_css %}
-<i class="nav-icon fas fa-newspaper"></i> Мэдээллийн дэлгэрэнгүй <a href="/student_news" class="btn btn-success"><i
+<i class="nav-icon fas fa-newspaper"></i> Мэдээллийн дэлгэрэнгүй <a href="/student_news" class="btn btn-primary shadow-custom"><i
     class="nav-icon fas fa-chevron-left"></i> Буцах</a>
 {% endblock page_title %}
 
@@ -112,8 +116,8 @@
               <input type="hidden" name="News_id" value="{{ news.id }}">
               <div class="form-group">
                 <label>Сэтгэгдэл</label>
-                <textarea class="form-control text-c1" name="body" cols="31" rows="4" placeholder="Сэтгэгдлээ энд бичнэ үү."></textarea>
-                <button type="submit" class="btn btn-primary mt-4">Илгээх</button>
+                <textarea required class="form-control text-c1" name="body" cols="31" rows="4" placeholder="Сэтгэгдлээ энд бичнэ үү."></textarea>
+                <button type="submit" class="btn btn-primary mt-4 shadow-custom">Илгээх</button>
               </div>
             </form>
             <hr style="border-top: 1px solid rgb(151, 151, 151);">
@@ -179,8 +183,8 @@
                   <input type="hidden" name="News_id" value="{{ news.id }}">
                   <div class="form-group">
                     <label>Засах</label>
-                    <textarea class="form-control text-c1" name="body" cols="31" rows="1">{{ a.body }}</textarea>
-                    <button type="submit" class="btn btn-primary mt-4">Засах</button>
+                    <textarea required class="form-control text-c1" name="body" cols="31" rows="1">{{ a.body }}</textarea>
+                    <button type="submit" class="btn btn-primary mt-4 shadow-custom">Засах</button>
                   </div>
                 </form>
               </div>
@@ -193,8 +197,8 @@
                   <input type="hidden" name="News_id" value="{{ news.id }}">
                   <div class="form-group">
                     <label>Хариулах</label>
-                    <textarea class="form-control text-c1" name="body" cols="31" rows="1" placeholder="Хариу"></textarea>
-                    <button type="submit" class="btn btn-primary mt-4">Хариулах</button>
+                    <textarea required class="form-control text-c1" name="body" cols="31" rows="1" placeholder="Хариу"></textarea>
+                    <button type="submit" class="btn btn-primary mt-4 shadow-custom">Хариулах</button>
                   </div>
                 </form>
               </div>
@@ -256,8 +260,8 @@
                       <input type="hidden" name="News_id" value="{{ news.id }}">
                       <div class="form-group">
                         <label>Хариулт засах</label>
-                        <textarea class="form-control text-c1" name="body" cols="31" rows="1">{{ b.body }}</textarea>
-                        <button type="submit" class="btn btn-primary mt-4">Засах</button>
+                        <textarea required class="form-control text-c1" name="body" cols="31" rows="1">{{ b.body }}</textarea>
+                        <button type="submit" class="btn btn-primary mt-4 shadow-custom">Засах</button>
                       </div>
                     </form>
                   </div>
@@ -283,8 +287,8 @@
               <input type="hidden" name="News_id" value="{{ news.id }}">
               <div class="form-group">
                 <label>Сэтгэгдэл</label>
-                <textarea class="form-control text-c1" name="body" cols="31" rows="4" placeholder="Сэтгэгдлээ энд бичнэ үү."></textarea>
-                <button type="submit" class="btn btn-primary mt-4">Илгээх</button>
+                <textarea required class="form-control text-c1" name="body" cols="31" rows="4" placeholder="Сэтгэгдлээ энд бичнэ үү."></textarea>
+                <button type="submit" class="btn btn-primary mt-4 shadow-custom">Илгээх</button>
               </div>
             </form>
             

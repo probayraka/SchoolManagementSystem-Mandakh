@@ -1,6 +1,6 @@
 {% extends 'staff_template/base_template.html' %}
 {% block page_title %}
-Ирц авах
+<i class="nav-icon fas fa-user-check"></i> Ирц авах
 {% endblock page_title %}
 {% block main_content %}
 
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="button" class="btn btn-primary btn-block" id="fetch_student">Сурагч сонгох</button>
+            <button type="button" class="btn btn-primary btn-block shadow-custom" id="fetch_student">Сурагч сонгох</button>
           </div>
           <div id="student_data" class="card-footer">
           </div>
@@ -76,7 +76,7 @@
           }
           div_data += "</div></div>";
           div_data += "<div class='form-group'>";
-          div_data += "<button id='save_attendance' class='btn btn-success btn-block' type='button'>Ирц хадгалах</button>";
+          div_data += "<button id='save_attendance' class='btn btn-success btn-block shadow-custom' type='button'>Ирц хадгалах</button>";
           div_data += "</div>";
 
           $("#student_data").html(div_data);
